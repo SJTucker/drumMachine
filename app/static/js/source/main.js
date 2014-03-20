@@ -2,6 +2,7 @@
 
   'use strict';
   var context;
+  var drums;
 
 
   $(document).ready(init);
@@ -10,8 +11,43 @@
     $(document).foundation();
     createContext();
     //createSound();
-    
-    $('#kick').click(createKick);
+    createDrums();
+    $('#kick').click(playKick);
+    $('#snare').click(playSnare);
+    $('#hat').click(playHat);
+    $('body').keydown(function(event){
+      if(event.keyCode === 65 || event.keyCode === 90){
+        playKick();
+        $('#kick').css('background-color', 'white');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 65 || event.keyCode === 90){
+        $('#kick').css('background-color', 'black');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 72){
+        playSnare();
+        $('#snare').css('background-color', 'white');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 72){
+        $('#snare').css('background-color', 'black');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 76){
+        playHat();
+        $('#hat').css('background-color', 'white');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 76){
+        $('#hat').css('background-color', 'black');
+      }
+    });
   }
 
   function createContext(){
@@ -58,15 +94,28 @@
     source.start(time);
   }
 
-  function createKick(){
-    var kick = new BufferLoader(context, ['../../audios/drums/kick.wav'], playKick);
-    kick.load();
+  function createDrums(){
+    drums = new BufferLoader(context, ['../../audios/drums/kick.wav', '../../audios/drums/snare.wav', '../../audios/drums/hat.wav'], playKick);
+    drums.load();
   }
 
-  function playKick(bufferList){
-    //var kick = bufferList[0];
+  function playKick(){
     var source = context.createBufferSource();
-    source.buffer = bufferList[0];
+    source.buffer = drums.bufferList[0];
+    source.connect(context.destination);
+    source.start(0);
+  }
+
+  function playSnare(){
+    var source = context.createBufferSource();
+    source.buffer = drums.bufferList[1];
+    source.connect(context.destination);
+    source.start(0);
+  }
+
+  function playHat(){
+    var source = context.createBufferSource();
+    source.buffer = drums.bufferList[2];
     source.connect(context.destination);
     source.start(0);
   }
