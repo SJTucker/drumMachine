@@ -1,8 +1,12 @@
 (function(){
 
+  /*global BufferLoader:true, webkitAudioContext: true */
   'use strict';
   var context;
   var drums;
+  //var gainNodeKick;
+  var gainVolume;
+
 
 
   $(document).ready(init);
@@ -48,6 +52,14 @@
         $('#hat').css('background-color', 'black');
       }
     });
+    $('#volume').change(changeVolume);
+  }
+
+  function changeVolume(){
+    var volume = $('#volume').attr('data-slider');
+    console.log(volume);
+    //gainNodeKick.gain.value = volume/100;
+    gainVolume = volume/100;
   }
 
   function createContext(){
@@ -60,7 +72,11 @@
   }
 
   function createSound(){
-    var drums = new BufferLoader(context, ['../../audios/drums/kick.wav', '../../audios/drums/snare.wav', '../../audios/drums/hat.wav'], playBeat);
+    var drums = new BufferLoader(context,
+                                 ['../../audios/drums/kick.wav',
+                                  '../../audios/drums/snare.wav',
+                                  '../../audios/drums/hat.wav'],
+                                  playBeat);
     drums.load();
   }
 
@@ -68,7 +84,7 @@
     var kick = bufferList[0];
     var snare = bufferList[1];
     var hat = bufferList[2];
-    var startTime = context.currentTime + .100;
+    var startTime = context.currentTime + 0.100;
     var tempo = 80;
     var eighthNoteTime = (60/tempo)/2;
 
@@ -95,28 +111,44 @@
   }
 
   function createDrums(){
-    drums = new BufferLoader(context, ['../../audios/drums/kick.wav', '../../audios/drums/snare.wav', '../../audios/drums/hat.wav'], playKick);
+    drums = new BufferLoader(context,
+                             ['../../audios/drums/kick.wav',
+                              '../../audios/drums/snare.wav',
+                              '../../audios/drums/hat.wav'],
+                              dummyFunction);
     drums.load();
   }
 
+  function dummyFunction(){
+    console.log('This is the sickest drum machine youve ever seen');
+  }
   function playKick(){
+    var gainNodeKick = context.createGain();
+    gainNodeKick.gain.value = gainVolume;
     var source = context.createBufferSource();
     source.buffer = drums.bufferList[0];
-    source.connect(context.destination);
+    source.connect(gainNodeKick);
+    gainNodeKick.connect(context.destination);
     source.start(0);
   }
 
   function playSnare(){
+    var gainNodeSnare = context.createGain();
+    gainNodeSnare.gain.value = gainVolume;
     var source = context.createBufferSource();
     source.buffer = drums.bufferList[1];
-    source.connect(context.destination);
+    source.connect(gainNodeSnare);
+    gainNodeSnare.connect(context.destination);
     source.start(0);
   }
 
   function playHat(){
+    var gainNodeHat = context.createGain();
+    gainNodeHat.gain.value = gainVolume;
     var source = context.createBufferSource();
     source.buffer = drums.bufferList[2];
-    source.connect(context.destination);
+    source.connect(gainNodeHat);
+    gainNodeHat.connect(context.destination);
     source.start(0);
   }
 
