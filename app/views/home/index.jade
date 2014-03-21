@@ -1,11 +1,25 @@
 extends ../shared/template
 
 block content
-  h1 Drums
+  .panel.text-center
+    h1 Drums
+
+  .row
+    .small-3.columns
+      select#kit
+        option(value='kit1') Kit 1
+        option(value='kit2') Kit 2
+        option(value='kit3') Kit 3
+
 
   .row
     .small-3.columns.
-      <div id="volume" class="range-slider" data-slider><span class="range-slider-handle"></span><span class="range-slider-active-segment"></span><input type="hidden"></div>
+      <h4>Volume</h4>
+      <div id="volume" class="range-slider" data-slider>
+        <span class="range-slider-handle"></span>
+        <span class="range-slider-active-segment"></span>
+        <input type="hidden">
+      </div>
 
   .row
     .small-3.columns

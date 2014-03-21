@@ -15,7 +15,7 @@
     $(document).foundation();
     createContext();
     //createSound();
-    createDrums();
+    //createDrums();
     $('#kick').click(playKick);
     $('#snare').click(playSnare);
     $('#hat').click(playHat);
@@ -53,13 +53,12 @@
       }
     });
     $('#volume').change(changeVolume);
+    $('select#kit').change(changeKit);
   }
 
   function changeVolume(){
     var volume = $('#volume').attr('data-slider');
-    console.log(volume);
-    //gainNodeKick.gain.value = volume/100;
-    gainVolume = volume/100;
+    gainVolume = volume/50;
   }
 
   function createContext(){
@@ -71,50 +70,38 @@
     }
   }
 
-  function createSound(){
-    var drums = new BufferLoader(context,
-                                 ['../../audios/drums/kick.wav',
-                                  '../../audios/drums/snare.wav',
-                                  '../../audios/drums/hat.wav'],
-                                  playBeat);
-    drums.load();
-  }
-
-  function playBeat(bufferList){
-    var kick = bufferList[0];
-    var snare = bufferList[1];
-    var hat = bufferList[2];
-    var startTime = context.currentTime + 0.100;
-    var tempo = 80;
-    var eighthNoteTime = (60/tempo)/2;
-
-    for(var bar = 0; bar < 2; bar++){
-      var time = startTime + bar * 8 * eighthNoteTime;
-
-      playSound(kick, time);
-      playSound(kick, time + 4 * eighthNoteTime);
-
-      playSound(snare, time + 2 * eighthNoteTime);
-      playSound(snare, time + 6 * eighthNoteTime);
-
-      for (var i = 0; i < 8; i++){
-        playSound(hat, time + i * eighthNoteTime);
-      }
+  function changeKit(){
+    var kit = $('select#kit').val();
+    if(kit === 'kit1'){
+      drums = new BufferLoader(context,
+                               ['../../audios/drums/kick1.wav',
+                                '../../audios/drums/snare1.wav',
+                                '../../audios/drums/hat1.wav'],
+                                dummyFunction);
+      drums.load();
+    }else if(kit === 'kit2'){
+      drums = new BufferLoader(context,
+                               ['../../audios/drums/kick2.wav',
+                               '../../audios/drums/snare2.wav',
+                               '../../audios/drums/hat2.wav'],
+                               dummyFunction);
+      drums.load();
+    }else if (kit === 'kit3'){
+      drums = new BufferLoader(context,
+                               ['../../audios/drums/kick3.wav',
+                               '../../audios/drums/snare3.wav',
+                               '../../audios/drums/hat3.wav'],
+                               dummyFunction);
+      drums.load();
     }
-  }
 
-  function playSound(buffer, time){
-    var source = context.createBufferSource();
-    source.buffer = buffer;
-    source.connect(context.destination);
-    source.start(time);
   }
 
   function createDrums(){
     drums = new BufferLoader(context,
-                             ['../../audios/drums/kick.wav',
-                              '../../audios/drums/snare.wav',
-                              '../../audios/drums/hat.wav'],
+                             ['../../audios/drums/kick1.wav',
+                              '../../audios/drums/snare1.wav',
+                              '../../audios/drums/hat1.wav'],
                               dummyFunction);
     drums.load();
   }
@@ -152,5 +139,46 @@
     source.start(0);
   }
 
+
+
+/*function createSound(){
+  var drums = new BufferLoader(context,
+                               ['../../audios/drums/kick.wav',
+                                '../../audios/drums/snare.wav',
+                                '../../audios/drums/hat.wav'],
+                                playBeat);
+  drums.load();
+}
+
+function playBeat(bufferList){
+  var kick = bufferList[0];
+  var snare = bufferList[1];
+  var hat = bufferList[2];
+  var startTime = context.currentTime + 0.100;
+  var tempo = 80;
+  var eighthNoteTime = (60/tempo)/2;
+
+  for(var bar = 0; bar < 2; bar++){
+    var time = startTime + bar * 8 * eighthNoteTime;
+
+    playSound(kick, time);
+    playSound(kick, time + 4 * eighthNoteTime);
+
+    playSound(snare, time + 2 * eighthNoteTime);
+    playSound(snare, time + 6 * eighthNoteTime);
+
+    for (var i = 0; i < 8; i++){
+      playSound(hat, time + i * eighthNoteTime);
+    }
+  }
+
+  function playSound(buffer, time){
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(time);
+  }
+
+}*/
 
 })();
