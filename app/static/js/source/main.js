@@ -6,6 +6,9 @@
   var drums;
   //var gainNodeKick;
   var gainVolume;
+  var chorusSpeed;
+  var chorusDelay;
+  var chorusDepth;
 
 
 
@@ -16,6 +19,7 @@
     createContext();
     //createSound();
     //createDrums();
+    createChorus();
     $('#kick').click(playKick);
     $('#snare').click(playSnare);
     $('#hat').click(playHat);
@@ -54,11 +58,35 @@
     });
     $('#volume').change(changeVolume);
     $('select#kit').change(changeKit);
+    $('#chorus-speed').change(changeChorusSpeed);
+    $('#chorus-delay').change(changeChorusDelay);
+    $('#chorus-depth').change(changeChorusDepth);
   }
 
   function changeVolume(){
     var volume = $('#volume').attr('data-slider');
     gainVolume = volume/50;
+  }
+
+  function changeChorusSpeed(){
+    var speed = $('#chorus-speed').attr('data-slider');
+    chorusSpeed = speed;
+  }
+
+  function changeChorusDelay(){
+    var delay = $('#chorus-delay').attr('data-slider');
+    chorusDelay = delay;
+    console.log(delay);
+  }
+
+  function changeChorusDepth(){
+    var depth = $('#chorus-depth').attr('data-slider');
+    chorusDepth = depth;
+  }
+
+  function createChorus(){
+    var delayNode = context.createDelay();
+    delayNode.delayTime = chorusDelay;
   }
 
   function createContext(){
@@ -110,13 +138,23 @@
     console.log('This is the sickest drum machine youve ever seen');
   }
   function playKick(){
+    var delayNode = context.createDelay();
+    delayNode.delayTime.value = chorusDelay;
+    chorusDelay = delayNode;
+    var osc = context.createOscillator();
+    osc.type = osc.SINE;
+    osc.frequency.value = chorusSpeed;
+    chorusSpeed = osc;
     var gainNodeKick = context.createGain();
     gainNodeKick.gain.value = gainVolume;
     var source = context.createBufferSource();
     source.buffer = drums.bufferList[0];
-    source.connect(gainNodeKick);
-    gainNodeKick.connect(context.destination);
+    osc.connect(gainNodeKick);
+    source.connect(delayNode);
+    gainNodeKick.connect(delayNode);
+    delayNode.connect(context.destination);
     source.start(0);
+    osc.start(0);
   }
 
   function playSnare(){

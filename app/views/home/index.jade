@@ -15,7 +15,24 @@ block content
   .row
     .small-3.columns.
       <h4>Volume</h4>
-      <div id="volume" class="range-slider" data-slider>
+      <div id="volume" class="range-slider radius" data-slider>
+        <span class="range-slider-handle"></span>
+        <span class="range-slider-active-segment"></span>
+        <input type="hidden">
+      </div>
+    .small-3.columns.
+      <h4>Chorus</h4>
+      <div id="chorus-speed" class="range-slider radius" data-slider data-options="step: 0.25; start: 0.5; end: 15">
+        <span class="range-slider-handle"></span>
+        <span class="range-slider-active-segment"></span>
+        <input type="hidden">
+      </div>
+      <div id="chorus-delay" class="range-slider radius" data-slider data-options="step: 0.005; start: 0.005; end: 0.055; value: 0.03">
+        <span class="range-slider-handle"></span>
+        <span class="range-slider-active-segment"></span>
+        <input type="hidden">
+      </div>
+      <div id="chorus-depth" class="range-slider radius" data-slider data-options="step: 0.0005; start: 0.0005; end: 0.004">
         <span class="range-slider-handle"></span>
         <span class="range-slider-active-segment"></span>
         <input type="hidden">
