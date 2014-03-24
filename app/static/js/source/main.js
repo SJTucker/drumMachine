@@ -10,7 +10,7 @@
   var lookAhead = 0.1;
   var tempo = 120.0;
   var isPlaying = false;
-  var noteLength = 0.05;
+  //var noteLength = 0.05;
   var timerID = 0;
   var source;
 
@@ -26,7 +26,7 @@
 
 ///////////Setup////////////
   function setTempo(){
-    tempo = $('#tempo').val()
+    tempo = $('#tempo').val();
   }
 
 /////////Web Audio Drums///////////////
@@ -68,10 +68,10 @@
       current16thNote = 0;
       nextNoteTime = context.currentTime;
       scheduler();
-      return "stop";/////switch with toggle
+      return 'stop';/////switch with toggle
     }else{
       window.clearTimeout(timerID);
-      return "play";//////switch with toggle
+      return 'play';//////switch with toggle
     }
   }
 
@@ -112,7 +112,7 @@
     nextNoteTime += 0.25 * secondsPerBeat;
     current16thNote++;
     if(current16thNote === 16){
-      current16thNote === 0;
+      current16thNote = 0;
     }
   }
 
