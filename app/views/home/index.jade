@@ -2,13 +2,15 @@ extends ../shared/template
 
 block content
   h1 Drums
+  
+  .row
+    .small-3.columns
+       button#play Play
+      .small-9.columns
 
   .row
     .small-3.columns
-      div.drum#kick
-    .small-3.columns
-      div.drum#snare
-    .small-3.columns
-      div.drum#hat
-    .small-3.columns
-
+      div Tempo:
+        input(id="tempo", type="text")
+        button#setTempo Set Tempo
+    .small-9.columns
