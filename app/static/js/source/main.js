@@ -1,5 +1,6 @@
 (function(){
 
+/*globals BufferLoader: true, webkitAudioContext: true*/
   'use strict';
 
   var context;
@@ -35,8 +36,16 @@
   }
 
   function createDrums(){
-    drums = new BufferLoader(context, ['../../audios/drums/kick.wav', '../../audios/drums/snare.wav', '../../audios/drums/hat.wav'], console.log('Welcome to MegaHurt'));
+    drums = new BufferLoader(context,
+                            ['../../audios/drums/kick.wav',
+                             '../../audios/drums/snare.wav',
+                             '../../audios/drums/hat.wav'],
+                             dummyFunction);
     drums.load();
+  }
+
+  function dummyFunction(){
+    console.log('maybe');
   }
 
   function playKick(){

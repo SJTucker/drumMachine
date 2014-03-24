@@ -2,14 +2,25 @@ extends ../shared/template
 
 block content
   h1 Drums
-  .row
-    .small-3.columns
-       button#play Play
-      .small-9.columns
 
-  .row
-    .small-3.columns
-      div Tempo:
+  .row#controls
+    .small-12.columns
+      .row
+        .small-3.columns
+          button#play Play
+        .small-9.columns
+          &nbsp
+
+    .row
+      .small-3.columns
+        label
+          h3 Tempo:
         input(id="tempo", type="text")
         button#setTempo Set Tempo
-    .small-9.columns
+      .small-9.columns
+
+  div#sequencerWrapper
+    ul#sequenceSteps
+      li.seqStep
+      li.seqStep
+      li.seqStep
