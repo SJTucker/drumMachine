@@ -1,6 +1,9 @@
 extends ../shared/template
 
 block content
+ 
+  .panel.text-center
+    h1 Drums
 
   .row#space
     .small-12.columns
@@ -11,7 +14,7 @@ block content
     .small-12.columns
       .row
         .small-3.columns
-          button#play Play
+          button.tiny.radius#play Play
         .small-9.columns
           &nbsp
 
@@ -20,7 +23,7 @@ block content
         label
           h3 Tempo:
         input(id="tempo", type="text")
-        button#setTempo Set Tempo
+        button.tiny.radius#setTempo Set Tempo
       .small-9.columns
 
   .row#sequenceWrapper

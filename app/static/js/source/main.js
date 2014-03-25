@@ -77,9 +77,9 @@
 
   function createDrums(){
     drums = new BufferLoader(context,
-                            ['../../audios/drums/kick.wav',
-                             '../../audios/drums/snare.wav',
-                             '../../audios/drums/hat.wav'],
+                            ['../../audios/TR606/BassDrum.wav',
+                             '../../audios/TR606/Snare.wav',
+                             '../../audios/TR606/ClosedHat.wav'],
                              dummyFunction);
     drums.load();
   }
