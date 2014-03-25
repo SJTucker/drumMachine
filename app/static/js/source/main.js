@@ -7,13 +7,16 @@
   var drums;
   var current16thNote;
   var nextNoteTime = 0.0;
-  var lap = 25.0;
+  var lap = 10.0;
   var lookAhead = 0.1;
   var tempo = 120.0;
   var isPlaying = false;
   //var noteLength = 0.05;
   var timerID = 0;
   var source;
+  var kickQueue=[];
+  var snareQueue=[];
+  var hatQueue=[];
 
   $(document).ready(init);
 
@@ -23,11 +26,48 @@
     createDrums();
     $('#play').click(play);
     $('#setTempo').click(setTempo);
+    $('.kick').click(clickKick);
+    $('.snare').click(clickSnare);
+    $('.hat').click(clickHat);
+    $('.seqStep').click(clickSeqStep);
   }
 
+//////////Sequencer//////////////
+
+  function clickKick(){
+    if(!$(this).hasClass('selected')){
+      kickQueue.push(parseInt($(this).attr('kick-sequence-position')));
+    }else{
+      kickQueue = _.without(kickQueue, parseInt($(this).attr('kick-sequence-position')));
+    }
+  }
+
+  function clickSnare(){
+    if(!$(this).hasClass('selected')){
+      snareQueue.push(parseInt($(this).attr('snare-sequence-position')));
+    }else{
+      snareQueue = _.without(snareQueue, parseInt($(this).attr('snare-sequence-position')));
+    }
+  }
+  
+  function clickHat(){
+    if(!$(this).hasClass('selected')){
+      hatQueue.push(parseInt($(this).attr('hat-sequence-position')));
+    }else{
+      hatQueue = _.without(hatQueue, parseInt($(this).attr('hat-sequence-position')));
+    }
+  }
 ///////////Setup////////////
   function setTempo(){
     tempo = $('#tempo').val();
+  }
+
+  function clickSeqStep(){
+    if(!$(this).hasClass('selected')){
+      $(this).addClass('selected');
+    }else{
+      $(this).removeClass('selected');
+    }
   }
 
 /////////Web Audio Drums///////////////
@@ -107,12 +147,36 @@
     osc.start(time);
     osc.stop(time + noteLength);*/
 
-    if(beatNumber % 16 === 0){
+    /*if(beatNumber % 16 === 0){
       playKick();
     }else if(beatNumber % 4){
       playHat();
     }else{
       playSnare();
+    }*/
+
+    if(_.contains(kickQueue, beatNumber)){
+      if(_.contains(snareQueue, beatNumber)){
+        if(_.contains(hatQueue, beatNumber)){
+          playKick();
+          playSnare();
+          playHat();
+        }else{
+          playKick();
+          playSnare();
+        }
+      }else{
+        playKick();
+      }
+    }else if(_.contains(snareQueue, beatNumber)){
+      if(_.contains(hatQueue, beatNumber)){
+        playSnare();
+        playHat();
+      }else{
+        playSnare();
+      }
+    }else if(_.contains(hatQueue, beatNumber)){
+      playHat();
     }
   }
 

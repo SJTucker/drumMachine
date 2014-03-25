@@ -1,7 +1,11 @@
 extends ../shared/template
 
 block content
-  h1 Drums
+
+  .row#space
+    .small-12.columns
+      &nbsp
+
 
   .row#controls
     .small-12.columns
@@ -19,8 +23,18 @@ block content
         button#setTempo Set Tempo
       .small-9.columns
 
-  div#sequencerWrapper
-    ul#sequenceSteps
-      li.seqStep
-      li.seqStep
-      li.seqStep
+  .row#sequenceWrapper
+    .small-12.columns
+      ul.inline-list
+        -for(var i = 0; i < 16; i++){
+          li.seqStep.kick(kick-sequence-position = i)
+        -}
+      ul.inline-list
+        -for(var i = 0; i < 16; i++){
+          li.seqStep.snare(snare-sequence-position = i)
+        -}
+      ul.inline-list
+        -for(var i = 0; i < 16; i++){
+          li.seqStep.hat(hat-sequence-position = i)
+        -}
+
