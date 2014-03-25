@@ -3,13 +3,14 @@ extends ../shared/template
 block content
   h1 Drums
   .row
-    .small-3.columns
-       button#play Play
-      .small-9.columns
-
-  .row
-    .small-3.columns
+    .small-6.columns
+      div Kits:
+      select#kit
+        option(value='first') Drums of Death
+        option(value='second') Earthquake Ruckus
+        option(value='third') God vs. Satan
+      button#play Play
+    .small-6.columns
       div Tempo:
-        input(id="tempo", type="text")
+        input(id="tempo", type="text" placeholder="120")
         button#setTempo Set Tempo
-    .small-9.columns
