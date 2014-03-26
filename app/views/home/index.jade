@@ -3,7 +3,7 @@ extends ../shared/template
 block content
  
   .panel.text-center
-    h1 Drums
+    h1 seQuenZisTenZ
 
   .row#space
     .small-12.columns
@@ -13,7 +13,7 @@ block content
   .row#controls
     .small-12.columns
       .row
-        .small-3.columns
+        .small-2.columns
           div 
             h3 Kits:
             select#kit
@@ -28,20 +28,70 @@ block content
             h3 Tempo:
           input.tempoText(id="tempo", type="text")
           button.tiny.radius#setTempo Set Tempo
-        .small-7.columns
+        .small-2.columns.
+          <h3>Volume:</h3>
+            <div id="volume" class="range-slider radius" data-slider>
+              <span class="range-slider-handle"></span>
+              <span class="range-slider-active-segment"></span>
+              <input type="hidden">
+            </div>
+
+        .small-4.columns
 
   .row#sequenceWrapper
     .small-12.columns
       ul.inline-list
-        -for(var i = 0; i < 16; i++){
+        li.drum#kick Kick
+        -for(var i = 0; i < 4; i++)
           li.seqStep.kick(kick-sequence-position = i)
-        -}
-      ul.inline-list
-        -for(var i = 0; i < 16; i++){
-          li.seqStep.snare(snare-sequence-position = i)
-        -}
-      ul.inline-list
-        -for(var i = 0; i < 16; i++){
-          li.seqStep.hat(hat-sequence-position = i)
-        -}
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.kick(kick-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.kick(kick-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.kick(kick-sequence-position = i)
 
+      ul.inline-list
+        li.drum#snare Snare
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.snare(snare-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.snare(snare-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.snare(snare-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.snare(snare-sequence-position = i)
+        
+      ul.inline-list
+        li.drum#hat Hat
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.hat(hat-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.hat(hat-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.hat(hat-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.hat(hat-sequence-position = i)
+
+      ul.inline-list
+        li.drum#tom1 Tom1
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.tom1(tom1-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.tom1(tom1-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.tom1(tom1-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.tom1(tom1-sequence-position = i)

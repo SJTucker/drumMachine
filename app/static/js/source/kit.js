@@ -14,10 +14,12 @@ function Kit(context, name, kNum) {
   var kickPath = this.pathName + 'kick.wav';
   var snarePath = this.pathName + 'snare.wav';
   var hatPath = this.pathName + 'hat.wav';
+  var tom1Path = this.pathName + 'tom1.wav';
 
   this.kickBuffer = 0;
   this.snareBuffer = 0;
   this.hatBuffer = 0;
+  this.tom1Buffer = 0;
 
   this.instrumentCount = kNum;
   this.instrumentLoadCount = 0;
@@ -25,8 +27,8 @@ function Kit(context, name, kNum) {
   this.loadSample(0, kickPath, false);
   this.loadSample(1, snarePath, false);
   this.loadSample(2, hatPath, false);
+  this.loadSample(3, tom1Path, false);
 
-  console.log(this);
 }
 //------ Loads Drum Samples ------//
 Kit.prototype.loadSample = function(sampleID, url, mixToMono) {
@@ -41,7 +43,7 @@ Kit.prototype.loadSample = function(sampleID, url, mixToMono) {
   request.onload = function(){
     self.context.decodeAudioData(
       request.response, function(buffer){
-        // var buffer = context.createBuffer(request.response, mixToMono);
+      //  var buffer = context.createBuffer(request.response, mixToMono);
         switch (sampleID) {
           case 0:
             self.kickBuffer = buffer;
@@ -52,6 +54,8 @@ Kit.prototype.loadSample = function(sampleID, url, mixToMono) {
           case 2:
             self.hatBuffer = buffer;
             break;
+          case 3:
+            self.tom1Buffer = buffer;
         }
         successCount++;
         self.instrumentLoadCount++;
