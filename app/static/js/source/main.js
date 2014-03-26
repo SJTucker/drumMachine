@@ -1,36 +1,62 @@
 (function(){
 
-/*globals BufferLoader: true, webkitAudioContext: true*/
+/*globals  webkitAudioContext: true, Kit:true*/
   'use strict';
 
-  var context;
-  var drums;
-  var current16thNote;
-  var nextNoteTime = 0.0;
-  var lap = 10.0;
-  var lookAhead = 0.1;
-  var tempo = 120.0;
-  var isPlaying = false;
-  var timerID = 0;
-  var source;
-  var kickQueue=[];
-  var snareQueue=[];
-  var hatQueue=[];
 
   $(document).ready(init);
 
   function init(){
     $(document).foundation();
     createAudioContext();
-    createDrums();
+    initDrums();
     $('#play').click(play);
     $('#setTempo').click(setTempo);
     $('.kick').click(clickKick);
     $('.snare').click(clickSnare);
     $('.hat').click(clickHat);
     $('.seqStep').click(clickSeqStep);
+    $('select#kit').change(changeKit);
   }
 
+//////// KITS ////////
+  var kits = [];
+  var kNumInstruments = 3; // called in drawDrumGrid(), drawPlayhead()
+  var kitNames = [
+    'Plasticid-MkII',
+    'T09',
+    'TR606',
+  ];
+  //------ Initialize Drum Kits ------//
+  function initDrums(){
+    var numKits = kitNames.length;
+    for (var i = 0; i < numKits; i++) {
+      kits.push(new Kit(context, kitNames[i], kNumInstruments));
+    }
+    changeKit();
+    console.log(kits);
+  }
+
+//////// CONTROLS ////////
+  var currentKit;
+  var tempo = 120.0;
+
+  function setTempo(){
+    tempo = $('#tempo').val();
+  }
+
+  function changeKit(){
+    currentKit = $('select#kit').val();
+    if(currentKit === 'Plasticid-MkII'){
+      currentKit = kits[0];
+    }
+    if(currentKit === 'T09'){
+      currentKit = kits[1];
+    }
+    if(currentKit === 'TR606'){
+      currentKit = kits[2];
+    }
+  }
 //////////Sequencer//////////////
 
   function clickKick(){
@@ -56,10 +82,6 @@
       hatQueue = _.without(hatQueue, parseInt($(this).attr('hat-sequence-position')));
     }
   }
-///////////Setup////////////
-  function setTempo(){
-    tempo = $('#tempo').val();
-  }
 
   function clickSeqStep(){
     if(!$(this).hasClass('selected')){
@@ -70,11 +92,14 @@
   }
 
 /////////Web Audio Drums///////////////
+  var context;
+  var source;
+
   function createAudioContext(){
     context = new webkitAudioContext();
   }
 
-  function createDrums(){
+  /*function createDrums(){
     drums = new BufferLoader(context,
                             ['../../audios/Plasticid-MkII/kick.wav',
                              '../../audios/Plasticid-MkII/snare.wav',
@@ -85,30 +110,24 @@
 
   function dummyFunction(){
     console.log('maybe');
-  }
+  }*/
 
-  function playKick(){
-    source = context.createBufferSource();
-    source.buffer = drums.bufferList[0];
-    source.connect(context.destination);
-    source.start(0);
-  }
-
-  function playSnare(){
-    source = context.createBufferSource();
-    source.buffer = drums.bufferList[1];
-    source.connect(context.destination);
-    source.start(0);
-  }
-
-  function playHat(){
-    source = context.createBufferSource();
-    source.buffer = drums.bufferList[2];
-    source.connect(context.destination);
-    source.start(0);
-  }
 
 //////////Play///////////////////////
+
+  var current16thNote;
+  var nextNoteTime = 0.0;
+  var lap = 10.0;
+  var lookAhead = 0.1;
+  var kickQueue=[];
+  var snareQueue=[];
+  var hatQueue=[];
+  var isPlaying = false;
+  var timerID = 0;
+  //var nyquist = sampleRate * 0.5;
+
+
+
   function play(){
     isPlaying = !isPlaying;
 
@@ -135,26 +154,33 @@
     if(_.contains(kickQueue, beatNumber)){
       if(_.contains(snareQueue, beatNumber)){
         if(_.contains(hatQueue, beatNumber)){
-          playKick();
-          playSnare();
-          playHat();
+          playNote(currentKit.kickBuffer);
+          playNote(currentKit.snareBuffer);
+          playNote(currentKit.hatBuffer);
         }else{
-          playKick();
-          playSnare();
+          playNote(currentKit.kickBuffer);
+          playNote(currentKit.snareBuffer);
         }
       }else{
-        playKick();
+        playNote(currentKit.kickBuffer);
       }
     }else if(_.contains(snareQueue, beatNumber)){
       if(_.contains(hatQueue, beatNumber)){
-        playSnare();
-        playHat();
+        playNote(currentKit.snareBuffer);
+        playNote(currentKit.hatBuffer);
       }else{
-        playSnare();
+        playNote(currentKit.snareBuffer);
       }
     }else if(_.contains(hatQueue, beatNumber)){
-      playHat();
+      playNote(currentKit.hatBuffer);
     }
+  }
+
+  function playNote(buffer){
+    source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
   }
 
   function nextNote(){

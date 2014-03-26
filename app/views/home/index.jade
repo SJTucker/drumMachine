@@ -14,17 +14,21 @@ block content
     .small-12.columns
       .row
         .small-3.columns
-          button.tiny.radius#play Play
-        .small-9.columns
-          &nbsp
+          div 
+            h3 Kits:
+            select#kit
+              option(value='Plasticid-MkII') Plasticid MkII
+              option(value='T09') TR09
+              option(value='TR606') TR606
 
-    .row
-      .small-2.columns
-        label
-          h3 Tempo:
-        input.tempoText(id="tempo", type="text")
-        button.tiny.radius#setTempo Set Tempo
-      .small-10.columns
+          button.tiny.radius#play Play
+
+        .small-2.columns
+          label
+            h3 Tempo:
+          input.tempoText(id="tempo", type="text")
+          button.tiny.radius#setTempo Set Tempo
+        .small-7.columns
 
   .row#sequenceWrapper
     .small-12.columns
