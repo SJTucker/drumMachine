@@ -11,7 +11,6 @@
   var lookAhead = 0.1;
   var tempo = 120.0;
   var isPlaying = false;
-  //var noteLength = 0.05;
   var timerID = 0;
   var source;
   var kickQueue=[];
@@ -77,9 +76,9 @@
 
   function createDrums(){
     drums = new BufferLoader(context,
-                            ['../../audios/TR606/BassDrum.wav',
-                             '../../audios/TR606/Snare.wav',
-                             '../../audios/TR606/ClosedHat.wav'],
+                            ['../../audios/Plasticid-MkII/kick.wav',
+                             '../../audios/Plasticid-MkII/snare.wav',
+                             '../../audios/Plasticid-MkII/hat.wav'],
                              dummyFunction);
     drums.load();
   }
@@ -133,28 +132,6 @@
   }
 
   function scheduleNote(beatNumber, time){
-   /* var osc = context.createOscillator();
-    osc.connect(context.destination);
-
-    if(beatNumber % 16 === 0){
-      osc.frequency.value = 220.0;
-    }else if(beatNumber % 4){
-      osc.frequency.value = 440.0;
-    }else{
-      osc.frequency.value = 880;
-    }
-
-    osc.start(time);
-    osc.stop(time + noteLength);*/
-
-    /*if(beatNumber % 16 === 0){
-      playKick();
-    }else if(beatNumber % 4){
-      playHat();
-    }else{
-      playSnare();
-    }*/
-
     if(_.contains(kickQueue, beatNumber)){
       if(_.contains(snareQueue, beatNumber)){
         if(_.contains(hatQueue, beatNumber)){
