@@ -1,78 +1,69 @@
 'use strict';
 
-/////// KITS ///////
-var kits;
-var currentKit = 0;
 var kitCount = 0;
-var kNumInstruments = 3;
-var kitNames = [
-  "Drums-of-Death",
-  "Earthquake-Ruckus",
-  "God-vs-Satan",
-];
-//------ Initialize Drum Kits ------//
-var numKits = kitNames.length;
-kits = new Array(numKits);
-for (var i  = 0; i < numKits; i++) {
-  kits[i] = new Kit(kitNames[i]);
-}
+var errorCount = 0;
+var successCount = 0;
+var kits = 3;
+
 //------ Kit Constructor ------//
-//Variables: pathName, kNumInstruments
-function Kit(name) {
+function Kit(context, name, kNum) {
+  this.context = context;
   this.name = name;
-  this.pathName = function() {
-    var pathName = "audios/drums/" + this.name + "/";
-    return pathName;
-  };
+  this.pathName = '../../audios/drums/' + this.name + '/';
   //var pathName = this.pathName();
-  var kickPath = this.pathName + "kick.wav";
-  var snarePath = this.pathName + "snare.wav";
-  var hatPath = this.pathName + "hat.wav";
+  var kickPath = this.pathName + 'kick.wav';
+  var snarePath = this.pathName + 'snare.wav';
+  var hatPath = this.pathName + 'hat.wav';
 
   this.kickBuffer = 0;
   this.snareBuffer = 0;
   this.hatBuffer = 0;
 
-  this.instrumentCount = kNumInstruments;
+  this.instrumentCount = kNum;
   this.instrumentLoadCount = 0;
 
   this.loadSample(0, kickPath, false);
   this.loadSample(1, snarePath, false);
   this.loadSample(2, hatPath, false);
+
+  console.log(this);
 }
 //------ Loads Drum Samples ------//
 Kit.prototype.loadSample = function(sampleID, url, mixToMono) {
   // Load asynchronously
 
   var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.responseType = "arraybuffer";
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
 
-  var kit = this;
+  var self = this;
 
-  request.onload = function() {
-    context.decodeAudioData(
-      request.response, function(buffer) {
+  request.onload = function(){
+    self.context.decodeAudioData(
+      request.response, function(buffer){
         // var buffer = context.createBuffer(request.response, mixToMono);
         switch (sampleID) {
-            case 0: kit.kickBuffer = buffer; break;
-            case 1: kit.snareBuffer = buffer; break;
-            case 2: kit.hatBuffer = buffer; break;
+          case 0:
+            self.kickBuffer = buffer;
+            break;
+          case 1:
+            self.snareBuffer = buffer;
+            break;
+          case 2:
+            self.hatBuffer = buffer;
+            break;
         }
         successCount++;
-        var info = document.getElementById("info");
-        info.innerHTML = errorCount + " " + successCount;
-        kit.instrumentLoadCount++;
-        if (kit.instrumentLoadCount == kit.instrumentCount)
-          finishLoading();
+        self.instrumentLoadCount++;
+        if (self.instrumentLoadCount === self.instrumentCount){
+          kitCount++;
+          if (kitCount < kits){return;}
         }
       },
-      function() {
+      function(){
         errorCount++;
-        var info = document.getElementById("info");
-        info.innerHTML = errorCount + " " + successCount;
       }
     );
-  }
+  };
   request.send();
-}
+};
