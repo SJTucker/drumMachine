@@ -1,9 +1,38 @@
 extends ../shared/template
 
 block content
+  nav.top-bar
+
+    section.top-bar-section
+      ul.left
+        if user
+          li.email= user.slicedEmail
+      ul.navButton.right
+        li: a.nav(href="/register") Register
+        li.divider
+        li: a.nav(href="/login") Login
  
   .panel.text-center
     h1 seQuenZisTenZ
+
+  if user
+    .row
+      .small-3.columns
+        form(method='post', action='/')
+          label: h3 Name:
+          input#name(type="text")
+          button#save Save Beat
+  
+  if user
+    .row
+      .small-4.columns
+        select#beats
+          each beat in user.beats
+            option(value= beat.name)= beat.name
+   
+    
+        button#load Load
+    
 
   .row#space
     .small-12.columns
@@ -40,7 +69,7 @@ block content
 
   .row#sequenceWrapper
     .small-12.columns
-      ul.inline-list
+      ul.inline-list.kickUL
         li.drum#kick Kick
         -for(var i = 0; i < 4; i++)
           li.seqStep.kick(kick-sequence-position = i)
@@ -54,7 +83,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.kick(kick-sequence-position = i)
 
-      ul.inline-list
+      ul.inline-list.snareUL
         li.drum#snare Snare
         -for(var i = 0; i < 4; i++)
           li.seqStep.snare(snare-sequence-position = i)
@@ -68,7 +97,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.snare(snare-sequence-position = i)
         
-      ul.inline-list
+      ul.inline-list.hatUL
         li.drum#hat Hat
         -for(var i = 0; i < 4; i++)
           li.seqStep.hat(hat-sequence-position = i)
@@ -82,7 +111,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.hat(hat-sequence-position = i)
 
-      ul.inline-list
+      ul.inline-list.tom1UL
         li.drum#tom1 Tom1
         -for(var i = 0; i < 4; i++)
           li.seqStep.tom1(tom1-sequence-position = i)

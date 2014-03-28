@@ -75,6 +75,8 @@
         $('#tom1').css('color', 'white');
       }
     });
+    $('#save').click(saveBeat);
+    $('#load').click(getBeat);
   }
 
   function playKick(){
@@ -275,8 +277,41 @@
     }
     
   }
+  
+  function randomColor(buffer){
+    if(buffer === currentKit.kickBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#kick').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+    }
+    else if(buffer === currentKit.snareBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#snare').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+    }
+    else if(buffer === currentKit.hatBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#hat').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+    }
+    else if(buffer === currentKit.tom1Buffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#tom1').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+    }
+  }
+
 
   function playNote(buffer){
+    randomColor(buffer);
     var gainNode = context.createGain();
     gainNode.gain.value = gainVolume;
     source = context.createBufferSource();
@@ -292,6 +327,60 @@
     current16thNote++;
     if(current16thNote === 16){
       current16thNote = 0;
+    }
+  }
+
+/////////////User///////////////
+  var beats = [];
+  var name;
+  function saveBeat(){
+    var url = window.location.origin;
+    name = $('#name').val();
+    var data = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue};
+    var type = 'POST';
+    var success = updateBeats;
+
+    $.ajax({data:data, url:url, type:type, success:success});
+    
+    event.preventDefault();
+  }
+
+  function updateBeats(){
+    var $option;
+    beats.push({name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue});
+    console.log(beats[beats.length-1].name);
+    
+    $option = $('<option value="'+beats[beats.length-1].name+'">'+beats[beats.length-1].name+'</option>');
+    $('#beats').prepend($option);
+    
+  }
+
+  function getBeat(){
+    kickQueue = [];
+    snareQueue = [];
+    hatQueue = [];
+    tom1Queue = [];
+    console.log(kickQueue);
+    $('.seqStep').removeClass('selected');
+    console.log($('#beats').val());
+    var url = window.location.origin+'/user/'+$('#beats').val();
+    $.getJSON(url, loadBeat);
+  }
+
+  function loadBeat(data){
+    console.log(data);
+    kickQueue = data.beat.kickQueue;
+    snareQueue = data.beat.snareQueue;
+    hatQueue = data.beat.hatQueue;
+
+    console.log(kickQueue);
+
+    for(var i = 0; i < 16; i++){
+      if(_.contains(kickQueue, i)){
+        console.log('hi');
+        $('ul.kickUL li:eq('+(i+1)+')').addClass('selected');
+        
+      }
     }
   }
 
