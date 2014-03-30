@@ -57,7 +57,7 @@ User.findByEmailAndPassword = function(email, password, fn){
   });
 };
 
-User.prototype.saveBeat = function(name, oldkickQueue, oldsnareQueue, oldhatQueue, fn){
+User.prototype.saveBeat = function(name, oldkickQueue, oldsnareQueue, oldhatQueue, oldtomQueue, oldohatQueue, fn){
   var kickQueue = _.map(oldkickQueue, function(x){
     return parseInt(x);
   });
@@ -67,7 +67,14 @@ User.prototype.saveBeat = function(name, oldkickQueue, oldsnareQueue, oldhatQueu
   var hatQueue = _.map(oldhatQueue, function(x){
     return parseInt(x);
   });
-  var beat = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue};
+  var tomQueue = _.map(oldtomQueue, function(x){
+    return parseInt(x);
+  });
+  var ohatQueue = _.map(oldohatQueue, function(x){
+    return parseInt(x);
+  });
+
+  var beat = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue};
   this.beats.push(beat);
   update(this, function(err){
     fn(err);

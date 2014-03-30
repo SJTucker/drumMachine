@@ -1,38 +1,9 @@
 extends ../shared/template
 
 block content
-  nav.top-bar
 
-    section.top-bar-section
-      ul.left
-        if user
-          li.email= user.slicedEmail
-      ul.navButton.right
-        li: a.nav(href="/register") Register
-        li.divider
-        li: a.nav(href="/login") Login
- 
   .panel.text-center
     h1 seQuenZisTenZ
-
-  if user
-    .row
-      .small-3.columns
-        form(method='post', action='/')
-          label: h3 Name:
-          input#name(type="text")
-          button#save Save Beat
-  
-  if user
-    .row
-      .small-4.columns
-        select#beats
-          each beat in user.beats
-            option(value= beat.name)= beat.name
-   
-    
-        button#load Load
-    
 
   .row#space
     .small-12.columns
@@ -42,26 +13,14 @@ block content
   .row#controls
     .small-12.columns
       .row
-        .small-4.columns.text-center
-          div 
+        .small-4.columns
+          div
             h3 Kits:
             select#kit
-              option(value='Plasticid-MkII') Roland 808 MkII
-              option(value='T09') Roland TR909
-              option(value='TR606') Roland TR606
-              option(value='hiphop') HipHop
-              option(value='dr.groove') Boss Dr.Groove
-              option(value='ace') Ace Tone Rhythm
-              option(value='sonor-mini-mammut') Sonor Mini Mammut
-              option(value='Jomox-xbase-09') Jomox Xbase 09
-              option(value='akai-xe-8') Akai XE-8
-              option(value='multimoog') MultiMoog
-              option(value='nord-rack-2') Nord Rack 2
-              option(value='groovebox') Roland GrooveBox
-
-
-            button.control.left.tiny.radius#play
-
+              option(value='Plasticid-MkII') Plasticid MkII
+              option(value='T09') TR09
+              option(value='TR606') TR606
+            button.expand.alert.tiny.radius#play
         .small-4.columns.
           <h3>Volume:</h3>
             <div id="volume" class="range-slider radius" data-slider>
@@ -69,17 +28,18 @@ block content
               <span class="range-slider-active-segment"></span>
               <input type="hidden">
             </div>
-
-        .small-4.columns.text-center
+        .small-4.columns
           label
             h3 Tempo:
           input.tempoText(id="tempo", type="text")
-          button.control.right.tiny.radius#setTempo SET TEMPO
+          button.expand.alert.tiny.radius#setTempo SET TEMPO
 
-  .row#sequenceWrapper(style='width: 100%')
+      //.container#animation
+
+  .row(id='sequenceWrapper', style='width: 100%;')
     .small-12.columns
-      canvas(id='animation', class='container')
-      ul.inline-list.kickUL(style='width: 105%')
+      canvas(class='container', id='animation')
+      ul(class='inline-list', id='kickRow', style='width: 105%;')
         li.drum#kick Kick
         -for(var i = 0; i < 4; i++)
           li.seqStep.kick(kick-sequence-position = i)
@@ -93,7 +53,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.kick(kick-sequence-position = i)
 
-      ul.inline-list.snareUL(style='width: 105%')
+      ul(class='inline-list', id='snareRow', style='width: 105%;')
         li.drum#snare Snare
         -for(var i = 0; i < 4; i++)
           li.seqStep.snare(snare-sequence-position = i)
@@ -106,8 +66,8 @@ block content
         li.divider
         -for(var i = 12; i < 16; i++)
           li.seqStep.snare(snare-sequence-position = i)
-        
-      ul.inline-list.hatUL(style='width: 105%')
+
+      ul(class='inline-list', id='hatRow', style='width: 105%;')
         li.drum#hat Hat
         -for(var i = 0; i < 4; i++)
           li.seqStep.hat(hat-sequence-position = i)
@@ -121,34 +81,22 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.hat(hat-sequence-position = i)
 
-      ul.inline-list.tomUL(style='width: 105%')
-        li.drum#tom Tom
+      ul(class='inline-list', id='tomRow', style='width: 105%;')
+        li.drum#tom1 Tom
         -for(var i = 0; i < 4; i++)
-          li.seqStep.tom(tom-sequence-position = i)
+          li.seqStep.tom1(tom1-sequence-position = i)
         li.divider
         -for(var i = 4; i < 8; i++)
-          li.seqStep.tom(tom-sequence-position = i)
+          li.seqStep.tom1(tom1-sequence-position = i)
         li.divider
         -for(var i = 8; i < 12; i++)
-          li.seqStep.tom(tom-sequence-position = i)
+          li.seqStep.tom1(tom1-sequence-position = i)
         li.divider
         -for(var i = 12; i < 16; i++)
-          li.seqStep.tom(tom-sequence-position = i)
-            
-      ul.inline-list.ohatUL(style='width:105%')
-        li.drum#ohat OHat
-        -for(var i = 0; i < 4; i++)
-          li.seqStep.ohat(ohat-sequence-position = i)
-        li.divider
-        -for(var i = 4; i < 8; i++)
-          li.seqStep.ohat(ohat-sequence-position = i)
-        li.divider
-        -for(var i = 8; i < 12; i++)
-          li.seqStep.ohat(ohat-sequence-position = i)
-        li.divider
-        -for(var i = 12; i < 16; i++)
-          li.seqStep.ohat(ohat-sequence-position = i)
-            
+          li.seqStep.tom1(tom1-sequence-position = i)
+
+
+
   .row#synthControls
     .small-12.columns
       .row
@@ -249,3 +197,17 @@ block content
         li.divider
         -for(var i = 12; i < 16; i++)
           li.seqStep.f(f-sequence-position = i)
+
+      ul(class='inline-list', id='gRow', style='width: 105%;')
+        li.drum#g G
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.g(g-sequence-position = i)

@@ -3,7 +3,7 @@
 var kitCount = 0;
 var errorCount = 0;
 var successCount = 0;
-var kits = 3;
+var kits = 12;
 
 //------ Kit Constructor ------//
 function Kit(context, name, kNum) {
@@ -14,12 +14,14 @@ function Kit(context, name, kNum) {
   var kickPath = this.pathName + 'kick.wav';
   var snarePath = this.pathName + 'snare.wav';
   var hatPath = this.pathName + 'hat.wav';
-  var tom1Path = this.pathName + 'tom1.wav';
+  var tomPath = this.pathName + 'tom.wav';
+  var ohatPath = this.pathName + 'ohat.wav';
 
   this.kickBuffer = 0;
   this.snareBuffer = 0;
   this.hatBuffer = 0;
-  this.tom1Buffer = 0;
+  this.tomBuffer = 0;
+  this.ohatBuffer = 0;
 
   this.instrumentCount = kNum;
   this.instrumentLoadCount = 0;
@@ -27,7 +29,8 @@ function Kit(context, name, kNum) {
   this.loadSample(0, kickPath, false);
   this.loadSample(1, snarePath, false);
   this.loadSample(2, hatPath, false);
-  this.loadSample(3, tom1Path, false);
+  this.loadSample(3, tomPath, false);
+  this.loadSample(4, ohatPath, false);
 
 }
 //------ Loads Drum Samples ------//
@@ -55,7 +58,10 @@ Kit.prototype.loadSample = function(sampleID, url, mixToMono) {
             self.hatBuffer = buffer;
             break;
           case 3:
-            self.tom1Buffer = buffer;
+            self.tomBuffer = buffer;
+            break;
+          case 4:
+            self.ohatBuffer = buffer;
         }
         successCount++;
         self.instrumentLoadCount++;

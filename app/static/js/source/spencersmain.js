@@ -1,6 +1,6 @@
 (function(){
 
-/*globals  requestAnimationFrame:true, webkitAudioContext: true, Kit:true*/
+/* globals requestAnimationFrame:true, webkitAudioContext:true, Kit:true */
   'use strict';
 
 
@@ -9,35 +9,22 @@
   function init(){
     $(document).foundation();
     createAudioContext();
-    initDrums();
-    //initSynths();
-    initDrums();
-    initCanvas();
-    requestAnimationFrame(draw);
 
-    window.onorientationchange = resetCanvas;
-    window.onresize = resetCanvas;
 
     $('#play').click(play);
-    $('#play').text('PLAY');
     $('#setTempo').click(setTempo);
+    $('select#kit').change(changeKit);
+    $('#volume').change(changeVolume);
 
     $('.kick').click(clickKick);
     $('.snare').click(clickSnare);
     $('.hat').click(clickHat);
-    $('.tom').click(clickTom);
-    $('.ohat').click(clickOhat);
-    //$('select#synth').change(changeSynth);
-    $('.seqStep').click(clickSeqStep);
-
-    $('select#kit').change(changeKit);
-    $('#volume').change(changeVolume);
+    $('.tom1').click(clickTom1);
 
     $('#kick').click(playKick);
     $('#snare').click(playSnare);
     $('#hat').click(playHat);
-    $('#tom').click(playTom);
-    $('#ohat').click(playOhat);
+    $('#tom1').click(playTom1);
 /*
     $('.a').click(clickA);
     $('.b').click(clickB);
@@ -52,9 +39,11 @@
     $('#c').click(playC);
     $('#d').click(playD);
     $('#e').click(playE);
+    $('#f').click(playF);
+    $('#g').click(playG);
 */
+    $('.seqStep').click(clickSeqStep);
 
-//////Pads CSS////////////////
     $('body').keydown(function(event){
       if(event.keyCode === 65 || event.keyCode === 90){
         playKick();
@@ -96,21 +85,21 @@
     });
     $('body').keydown(function(e){
       if(e.keyCode === 82 || e.keyCode === 84){
-        playTom();
-        $('#tom').css('background-color', 'white');
-        $('#tom').css('color', 'black');
+        playTom1();
+        $('#tom1').css('background-color', 'white');
+        $('#tom1').css('color', 'black');
       }
     });
     $('body').keyup(function(event){
       if(event.keyCode === 82 || event.keyCode === 84){
-        $('#tom').css('background-color', 'black');
-        $('#tom').css('color', 'white');
+        $('#tom1').css('background-color', 'black');
+        $('#tom1').css('color', 'white');
       }
     });
-    $('#save').click(saveBeat);
-    $('#load').click(getBeat);
   }
-///////Play Drum Pads//////////////
+
+
+//////// KIT PADS ////////
   function playKick(){
     playNote(currentKit.kickBuffer);
   }
@@ -123,13 +112,10 @@
     playNote(currentKit.hatBuffer);
   }
 
-  function playTom(){
-    playNote(currentKit.tomBuffer);
+  function playTom1(){
+    playNote(currentKit.tom1Buffer);
   }
 
-  function playOhat(){
-    playNote(currentKit.ohatBuffer);
-  }
 /*
 //////// SYNTH PADS ////////
   function playA(){
@@ -160,27 +146,16 @@
     playNote(currentSynth.gBuffer);
   }
 */
+
 //////// KITS ////////
   var kits = [];
-  var kNumInstruments = 12; // called in drawDrumGrid(), drawPlayhead()
+  var kNumInstruments = 3;
   var kitNames = [
     'Plasticid-MkII',
     'T09',
     'TR606',
-    'hiphop',
-    'dr.groove',
-    'ace',
-    'sonor-mini-mammut',
-    'Jomox-xbase-09',
-    'akai-xe-8',
-    'multimoog',
-    'nord-rack-2',
-    'groovebox'
-
-
   ];
 
- //------ Initialize Drum Kits ------//
   function initDrums(){
     var numKits = kitNames.length;
     for (var i = 0; i < numKits; i++) {
@@ -188,8 +163,9 @@
     }
     changeKit();
   }
+
 /*
-//////// Initialize Synths ////////
+//////// SYNTHS ////////
   var synths = [];
   var sNumInstruments = 3;
   var synthNames = [
@@ -228,33 +204,6 @@
     if(currentKit === 'TR606'){
       currentKit = kits[2];
     }
-    if(currentKit === 'hiphop'){
-      currentKit = kits[3];
-    }
-    if(currentKit === 'dr.groove'){
-      currentKit = kits[4];
-    }
-    if(currentKit === 'ace'){
-      currentKit = kits[5];
-    }
-    if(currentKit === 'sonor-mini-mammut'){
-      currentKit === kits[6];
-    }
-    if(currentKit === 'jomox-xbase-09'){
-      currentKit === kits[7];
-    }
-    if(currentKit === 'akai-xe-8'){
-      currentKit = kits[8];
-    }
-    if(currentKit === 'multimoog'){
-      currentKit = kits[9];
-    }
-    if(currentKit === 'nord-rack-2'){
-      currentKit = kits[10];
-    }
-    if(currentKit === 'groovebox'){
-      currentKit = kits[11];
-    }
   }
 /*
   function changeSynth(){
@@ -270,7 +219,6 @@
     }
   }
 */
-
   function toggleStop(){
     if ($('#play').text() === 'STOP') {
       $('#play').text('PLAY');
@@ -283,7 +231,7 @@
     var volume = $('#volume').attr('data-slider');
     gainVolume = volume/50;
   }
-  
+
   function clickSeqStep(){
     if(!$(this).hasClass('selected')){
       $(this).addClass('selected');
@@ -291,12 +239,13 @@
       $(this).removeClass('selected');
     }
   }
-//////////Kit Sequencer//////////////
+
+
+//////// KIT SEQUENCER ////////
   var kickQueue=[];
   var snareQueue=[];
   var hatQueue=[];
-  var tomQueue=[];
-  var ohatQueue=[];
+  var tom1Queue=[];
 
   function clickKick(){
     if(!$(this).hasClass('selected')){
@@ -313,7 +262,7 @@
       snareQueue = _.without(snareQueue, parseInt($(this).attr('snare-sequence-position')));
     }
   }
-  
+
   function clickHat(){
     if(!$(this).hasClass('selected')){
       hatQueue.push(parseInt($(this).attr('hat-sequence-position')));
@@ -322,22 +271,13 @@
     }
   }
 
-  function clickTom(){
+  function clickTom1(){
     if(!$(this).hasClass('selected')){
-      tomQueue.push(parseInt($(this).attr('tom-sequence-position')));
+      tom1Queue.push(parseInt($(this).attr('tom1-sequence-position')));
     }else{
-      tomQueue = _.without(tomQueue, parseInt($(this).attr('tom-sequence-position')));
+      tom1Queue = _.without(tom1Queue, parseInt($(this).attr('tom1-sequence-position')));
     }
   }
-
-  function clickOhat(){
-    if(!$(this).hasClass('selected')){
-      ohatQueue.push(parseInt($(this).attr('ohat-sequence-position')));
-    }else{
-      ohatQueue = _.without(ohatQueue, parseInt($(this).attr('ohat-sequence-position')));
-    }
-  }
-
 
 /*
 //////// SYNTH SEQUENCER ////////
@@ -405,16 +345,8 @@
     }
   }
 */
-/////////Web Audio Drums///////////////
-  var context;
 
-  function createAudioContext(){
-    context = new webkitAudioContext();
-  }
-
-
-//////////Play///////////////////////
-
+//////// PLAYBACK ////////
   var current16thNote;
   var nextNoteTime = 0.0;
   var lap = 10.0;
@@ -423,12 +355,14 @@
   var timerID = 0;
   var source;
   //var nyquist = sampleRate * 0.5;
+  var context;
 
-
+  function createAudioContext(){
+    context = new webkitAudioContext();
+  }
 
   function play(){
     isPlaying = !isPlaying;
-
     if(isPlaying){
       current16thNote = 0;
       nextNoteTime = context.currentTime;
@@ -447,7 +381,7 @@
     }
     timerID = window.setTimeout(scheduler, lap);
   }
-  
+
   function scheduleNote(beatNumber, time){
     notesInQueue.push({note:beatNumber, time:time});
     if(_.contains(kickQueue, beatNumber)){
@@ -459,11 +393,8 @@
     if(_.contains(hatQueue, beatNumber)){
       playNote(currentKit.hatBuffer);
     }
-    if(_.contains(tomQueue, beatNumber)){
-      playNote(currentKit.tomBuffer);
-    }
-    if(_.contains(ohatQueue, beatNumber)){
-      playNote(currentKit.ohatBuffer);
+    if(_.contains(tom1Queue, beatNumber)){
+      playNote(currentKit.tom1Buffer);
     }
     /*if(_.contains(aQueue, beatNumber)){
       playNote(currentSynth.aBuffer);
@@ -540,48 +471,7 @@
 
   }
 */
-  
-  function randomColor(buffer){
-    if(buffer === currentKit.kickBuffer){
-      var red = Math.floor(Math.random() * 256);
-      var grn = Math.floor(Math.random() * 256);
-      var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#kick').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
-    }
-    else if(buffer === currentKit.snareBuffer){
-      var red = Math.floor(Math.random() * 256);
-      var grn = Math.floor(Math.random() * 256);
-      var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#snare').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
-    }
-    else if(buffer === currentKit.hatBuffer){
-      var red = Math.floor(Math.random() * 256);
-      var grn = Math.floor(Math.random() * 256);
-      var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#hat').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
-    }
-    else if(buffer === currentKit.tomBuffer){
-      var red = Math.floor(Math.random() * 256);
-      var grn = Math.floor(Math.random() * 256);
-      var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#tom').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
-    }
-    else if(buffer === currentKit.ohatBuffer){
-      var red = Math.floor(Math.random() * 256);
-      var grn = Math.floor(Math.random() * 256);
-      var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#ohat').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
-    }
-  }
-
-
   function playNote(buffer){
-    randomColor(buffer);
     var gainNode = context.createGain();
     gainNode.gain.value = gainVolume;
     source = context.createBufferSource();
@@ -599,68 +489,6 @@
       current16thNote = 0;
     }
   }
-
-/////////////User///////////////
-  var beats = [];
-  var name;
-  function saveBeat(){
-    var url = window.location.origin;
-    name = $('#name').val();
-    var data = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue};
-    var type = 'POST';
-    var success = updateBeats;
-
-    $.ajax({data:data, url:url, type:type, success:success});
-    
-    event.preventDefault();
-  }
-
-  function updateBeats(){
-    var $option;
-    beats.push({name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue});
-    console.log(beats[beats.length-1].name);
-    
-    $option = $('<option value="'+beats[beats.length-1].name+'">'+beats[beats.length-1].name+'</option>');
-    $('#beats').prepend($option);
-    
-  }
-
-  function getBeat(){
-    kickQueue = [];
-    snareQueue = [];
-    hatQueue = [];
-    tomQueue = [];
-    ohatQueue= [];
-
-    console.log(kickQueue);
-    $('.seqStep').removeClass('selected');
-    console.log($('#beats').val());
-    var url = window.location.origin+'/user/'+$('#beats').val();
-    $.getJSON(url, loadBeat);
-  }
-
-  function loadBeat(data){
-    console.log(data);
-    kickQueue = data.beat.kickQueue;
-    snareQueue = data.beat.snareQueue;
-    hatQueue = data.beat.hatQueue;
-    tomQueue = data.beat.tomQueue;
-    ohatQueue = data.beat.ohatQueue;
-
-    console.log(kickQueue);
-
-
-
-//////////NEEEEEEEDS WORK////////////
-    for(var i = 0; i < 16; i++){
-      if(_.contains(kickQueue, i)){
-        console.log('hi');
-        $('ul.kickUL li:eq('+(i+1)+')').addClass('selected');
-        
-      }
-    }
-  }
-
 
   //////// CANVAS and ANIMATION FRAME ////////
   var canvas = document.getElementById('animation');
@@ -883,5 +711,3 @@
   }
 
 })();
-
-

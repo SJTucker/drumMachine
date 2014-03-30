@@ -40,7 +40,13 @@ exports.authenticate = function(req, res){
 
 exports.saveBeat = function(req, res){
   User.findById(req.session.userId.toString(), function(user){
-    user.saveBeat(req.body.name?req.body.name:'', req.body.kickQueue?req.body.kickQueue:'', req.body.snareQueue?req.body.snareQueue:'', req.body.hatQueue?req.body.hatQueue:'', function(){
+    user.saveBeat(req.body.name?req.body.name:'',
+                  req.body.kickQueue?req.body.kickQueue:'',
+                  req.body.snareQueue?req.body.snareQueue:'',
+                  req.body.hatQueue?req.body.hatQueue:'',
+                  req.body.tomQueue?req.body.tomQueue:'',
+                  req.body.ohatQueue?req.body.ohatQueue:'',
+                  function(){
       res.redirect('/');
     });
   });
