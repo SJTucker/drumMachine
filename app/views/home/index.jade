@@ -1,7 +1,7 @@
 extends ../shared/template
 
 block content
- 
+
   .panel.text-center
     h1 seQuenZisTenZ
 
@@ -13,34 +13,33 @@ block content
   .row#controls
     .small-12.columns
       .row
-        .small-2.columns
-          div 
+        .small-4.columns
+          div
             h3 Kits:
             select#kit
               option(value='Plasticid-MkII') Plasticid MkII
               option(value='T09') TR09
               option(value='TR606') TR606
-
-          button.tiny.radius#play Play
-
-        .small-2.columns
-          label
-            h3 Tempo:
-          input.tempoText(id="tempo", type="text")
-          button.tiny.radius#setTempo Set Tempo
-        .small-2.columns.
+            button.expand.alert.tiny.radius#play
+        .small-4.columns.
           <h3>Volume:</h3>
             <div id="volume" class="range-slider radius" data-slider>
               <span class="range-slider-handle"></span>
               <span class="range-slider-active-segment"></span>
               <input type="hidden">
             </div>
-
         .small-4.columns
+          label
+            h3 Tempo:
+          input.tempoText(id="tempo", type="text")
+          button.expand.alert.tiny.radius#setTempo SET TEMPO
 
-  .row#sequenceWrapper
+      //.container#animation
+
+  .row(id='sequenceWrapper', style='width: 100%;')
     .small-12.columns
-      ul.inline-list
+      canvas(class='container', id='animation')
+      ul(class='inline-list', id='kickRow', style='width: 105%;')
         li.drum#kick Kick
         -for(var i = 0; i < 4; i++)
           li.seqStep.kick(kick-sequence-position = i)
@@ -54,7 +53,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.kick(kick-sequence-position = i)
 
-      ul.inline-list
+      ul(class='inline-list', id='snareRow', style='width: 105%;')
         li.drum#snare Snare
         -for(var i = 0; i < 4; i++)
           li.seqStep.snare(snare-sequence-position = i)
@@ -67,8 +66,8 @@ block content
         li.divider
         -for(var i = 12; i < 16; i++)
           li.seqStep.snare(snare-sequence-position = i)
-        
-      ul.inline-list
+
+      ul(class='inline-list', id='hatRow', style='width: 105%;')
         li.drum#hat Hat
         -for(var i = 0; i < 4; i++)
           li.seqStep.hat(hat-sequence-position = i)
@@ -82,8 +81,8 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.hat(hat-sequence-position = i)
 
-      ul.inline-list
-        li.drum#tom1 Tom1
+      ul(class='inline-list', id='tomRow', style='width: 105%;')
+        li.drum#tom1 Tom
         -for(var i = 0; i < 4; i++)
           li.seqStep.tom1(tom1-sequence-position = i)
         li.divider
@@ -95,3 +94,120 @@ block content
         li.divider
         -for(var i = 12; i < 16; i++)
           li.seqStep.tom1(tom1-sequence-position = i)
+
+
+
+  .row#synthControls
+    .small-12.columns
+      .row
+        .small-4.columns
+          div
+            h3 Synths:
+            select#synth
+              option(value='Plasticid-MkII') Plasticid MkII
+              option(value='T09') TR09
+              option(value='TR606') TR606
+        .small-4.columns
+
+        .small-4-columns
+
+  .row(id='synthWrapper', style='width: 100%;')
+    .small-12.columns
+      canvas(class='container', id='animation2')
+      ul(class='inline-list', id='aRow', style='width: 105%;')
+        li.drum#a A
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.a(a-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.a(a-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.a(a-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.a(a-sequence-position = i)
+
+      ul(class='inline-list', id='snareRow', style='width: 105%;')
+        li.drum#b B
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.b(b-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.b(b-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.b(b-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.b(b-sequence-position = i)
+
+      ul(class='inline-list', id='cRow', style='width: 105%;')
+        li.drum#c C
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.c(c-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.c(c-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.c(c-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.c(c-sequence-position = i)
+
+      ul(class='inline-list', id='dRow', style='width: 105%;')
+        li.drum#d D
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.d(d-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.d(d-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.d(d-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.d(d-sequence-position = i)
+
+      ul(class='inline-list', id='eRow', style='width: 105%;')
+        li.drum#e E
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.e(e-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.e(e-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.e(e-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.e(e-sequence-position = i)
+
+      ul(class='inline-list', id='fRow', style='width: 105%;')
+        li.drum#f F
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.f(f-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.f(f-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.f(f-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.f(f-sequence-position = i)
+
+      ul(class='inline-list', id='gRow', style='width: 105%;')
+        li.drum#g G
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.g(g-sequence-position = i)

@@ -1,6 +1,6 @@
 (function(){
 
-/*globals  webkitAudioContext: true, Kit:true*/
+/* globals requestAnimationFrame:true, webkitAudioContext:true, Kit:true */
   'use strict';
 
 
@@ -10,19 +10,48 @@
     $(document).foundation();
     createAudioContext();
     initDrums();
+    //initSynths();
+    initCanvas();
+    requestAnimationFrame(draw);
+
+    window.onorientationchange = resetCanvas;
+    window.onresize = resetCanvas;
+
     $('#play').click(play);
+    $('#play').text('PLAY');
     $('#setTempo').click(setTempo);
+    $('select#kit').change(changeKit);
+    //$('select#synth').change(changeSynth);
+    $('#volume').change(changeVolume);
+
     $('.kick').click(clickKick);
     $('.snare').click(clickSnare);
     $('.hat').click(clickHat);
     $('.tom1').click(clickTom1);
-    $('.seqStep').click(clickSeqStep);
-    $('select#kit').change(changeKit);
-    $('#volume').change(changeVolume);
+
     $('#kick').click(playKick);
     $('#snare').click(playSnare);
     $('#hat').click(playHat);
     $('#tom1').click(playTom1);
+/*
+    $('.a').click(clickA);
+    $('.b').click(clickB);
+    $('.c').click(clickC);
+    $('.d').click(clickD);
+    $('.e').click(clickE);
+    $('.f').click(clickF);
+    $('.g').click(clickG);
+
+    $('#a').click(playA);
+    $('#b').click(playB);
+    $('#c').click(playC);
+    $('#d').click(playD);
+    $('#e').click(playE);
+    $('#f').click(playF);
+    $('#g').click(playG);
+*/
+    $('.seqStep').click(clickSeqStep);
+
     $('body').keydown(function(event){
       if(event.keyCode === 65 || event.keyCode === 90){
         playKick();
@@ -77,6 +106,8 @@
     });
   }
 
+
+//////// KIT PADS ////////
   function playKick(){
     playNote(currentKit.kickBuffer);
   }
@@ -92,16 +123,47 @@
   function playTom1(){
     playNote(currentKit.tom1Buffer);
   }
+
+/*
+//////// SYNTH PADS ////////
+  function playA(){
+    playNote(currentSynth.aBuffer);
+  }
+
+  function playB(){
+    playNote(currentSynth.bBuffer);
+  }
+
+  function playC(){
+    playNote(currentSynth.cBuffer);
+  }
+
+  function playD(){
+    playNote(currentSynth.dBuffer);
+  }
+
+  function playE(){
+    playNote(currentSynth.eBuffer);
+  }
+
+  function playF(){
+    playNote(currentSynth.fBuffer);
+  }
+
+  function playG(){
+    playNote(currentSynth.gBuffer);
+  }
+*/
+
 //////// KITS ////////
   var kits = [];
-  var kNumInstruments = 3; // called in drawDrumGrid(), drawPlayhead()
+  var kNumInstruments = 3;
   var kitNames = [
     'Plasticid-MkII',
     'T09',
     'TR606',
   ];
 
- //------ Initialize Drum Kits ------//
   function initDrums(){
     var numKits = kitNames.length;
     for (var i = 0; i < numKits; i++) {
@@ -110,8 +172,28 @@
     changeKit();
   }
 
+/*
+//////// SYNTHS ////////
+  var synths = [];
+  var sNumInstruments = 3;
+  var synthNames = [
+    'Plasticid-MkII',
+    'T09',
+    'TR606',
+  ];
+
+  function initSynths(){
+    var numSynths = synthNames.length;
+    for (var i = 0; i < numSynths; i++) {
+      synths.push(new Synth(context, synthNames[i], sNumInstruments));
+    }
+    changeSynth();
+  }
+*/
+
 //////// CONTROLS ////////
   var currentKit;
+  //var currentSynth;
   var tempo = 120.0;
   var gainVolume = 1.0;
 
@@ -131,12 +213,43 @@
       currentKit = kits[2];
     }
   }
+/*
+  function changeSynth(){
+    currentSynth = $('select#synth').val();
+    if(currentSynth === 'Plasticid-MkII'){
+      currentSynth = synths[0];
+    }
+    if(currentSynth === 'T09'){
+      currentSynth = synths[1];
+    }
+    if(currentSynth === 'TR606'){
+      currentSynth = synths[2];
+    }
+  }
+*/
+  function toggleStop(){
+    if ($('#play').text() === 'STOP') {
+      $('#play').text('PLAY');
+    }else{
+      $('#play').text('STOP');
+    }
+  }
 
   function changeVolume(){
     var volume = $('#volume').attr('data-slider');
     gainVolume = volume/50;
   }
-//////////Sequencer//////////////
+
+  function clickSeqStep(){
+    if(!$(this).hasClass('selected')){
+      $(this).addClass('selected');
+    }else{
+      $(this).removeClass('selected');
+    }
+  }
+
+
+//////// KIT SEQUENCER ////////
   var kickQueue=[];
   var snareQueue=[];
   var hatQueue=[];
@@ -157,7 +270,7 @@
       snareQueue = _.without(snareQueue, parseInt($(this).attr('snare-sequence-position')));
     }
   }
-  
+
   function clickHat(){
     if(!$(this).hasClass('selected')){
       hatQueue.push(parseInt($(this).attr('hat-sequence-position')));
@@ -174,24 +287,74 @@
     }
   }
 
-  function clickSeqStep(){
+/*
+//////// SYNTH SEQUENCER ////////
+  var aQueue=[];
+  var bQueue=[];
+  var cQueue=[];
+  var dQueue=[];
+  var eQueue=[];
+  var fQueue=[];
+  var gQueue=[];
+
+  function clickA(){
     if(!$(this).hasClass('selected')){
-      $(this).addClass('selected');
+      aQueue.push(parseInt($(this).attr('a-sequence-position')));
     }else{
-      $(this).removeClass('selected');
+      aQueue = _.without(aQueue, parseInt($(this).attr('a-sequence-position')));
     }
   }
 
-/////////Web Audio Drums///////////////
-  var context;
-
-  function createAudioContext(){
-    context = new webkitAudioContext();
+  function clickB(){
+    if(!$(this).hasClass('selected')){
+      bQueue.push(parseInt($(this).attr('b-sequence-position')));
+    }else{
+      bQueue = _.without(bQueue, parseInt($(this).attr('b-sequence-position')));
+    }
   }
 
+  function clickC(){
+    if(!$(this).hasClass('selected')){
+      cQueue.push(parseInt($(this).attr('c-sequence-position')));
+    }else{
+      cQueue = _.without(cQueue, parseInt($(this).attr('c-sequence-position')));
+    }
+  }
 
-//////////Play///////////////////////
+  function clickD(){
+    if(!$(this).hasClass('selected')){
+      dQueue.push(parseInt($(this).attr('d-sequence-position')));
+    }else{
+      dQueue = _.without(dQueue, parseInt($(this).attr('d-sequence-position')));
+    }
+  }
 
+  function clickE(){
+    if(!$(this).hasClass('selected')){
+      eQueue.push(parseInt($(this).attr('e-sequence-position')));
+    }else{
+      eQueue = _.without(eQueue, parseInt($(this).attr('e-sequence-position')));
+    }
+  }
+
+  function clickF(){
+    if(!$(this).hasClass('selected')){
+      fQueue.push(parseInt($(this).attr('f-sequence-position')));
+    }else{
+      fQueue = _.without(fQueue, parseInt($(this).attr('f-sequence-position')));
+    }
+  }
+
+  function clickG(){
+    if(!$(this).hasClass('selected')){
+      gQueue.push(parseInt($(this).attr('g-sequence-position')));
+    }else{
+      gQueue = _.without(gQueue, parseInt($(this).attr('g-sequence-position')));
+    }
+  }
+*/
+
+//////// PLAYBACK ////////
   var current16thNote;
   var nextNoteTime = 0.0;
   var lap = 10.0;
@@ -200,20 +363,22 @@
   var timerID = 0;
   var source;
   //var nyquist = sampleRate * 0.5;
+  var context;
 
-
+  function createAudioContext(){
+    context = new webkitAudioContext();
+  }
 
   function play(){
     isPlaying = !isPlaying;
-
     if(isPlaying){
       current16thNote = 0;
       nextNoteTime = context.currentTime;
       scheduler();
-      return 'stop';/////switch with toggle
+      toggleStop();
     }else{
       window.clearTimeout(timerID);
-      return 'play';//////switch with toggle
+      toggleStop();
     }
   }
 
@@ -225,7 +390,45 @@
     timerID = window.setTimeout(scheduler, lap);
   }
 
-  function scheduleNote(beatNumber){
+  function scheduleNote(beatNumber, time){
+    notesInQueue.push({note:beatNumber, time:time});
+    if(_.contains(kickQueue, beatNumber)){
+      playNote(currentKit.kickBuffer);
+    }
+    if(_.contains(snareQueue, beatNumber)){
+      playNote(currentKit.snareBuffer);
+    }
+    if(_.contains(hatQueue, beatNumber)){
+      playNote(currentKit.hatBuffer);
+    }
+    if(_.contains(tom1Queue, beatNumber)){
+      playNote(currentKit.tom1Buffer);
+    }
+    /*if(_.contains(aQueue, beatNumber)){
+      playNote(currentSynth.aBuffer);
+    }
+    if(_.contains(bQueue, beatNumber)){
+      playNote(currentSynth.bBuffer);
+    }
+    if(_.contains(cQueue, beatNumber)){
+      playNote(currentSynth.cBuffer);
+    }
+    if(_.contains(dQueue, beatNumber)){
+      playNote(currentSynth.dBuffer);
+    }
+    if(_.contains(eQueue, beatNumber)){
+      playNote(currentSynth.eBuffer);
+    }
+    if(_.contains(fQueue, beatNumber)){
+      playNote(currentSynth.fBuffer);
+    }
+    if(_.contains(gQueue, beatNumber)){
+      playNote(currentSynth.gBuffer);
+    }*/
+  }
+/*
+  function scheduleNote(beatNumber, time){
+    notesInQueue.push({note:beatNumber, time:time});
     if(_.contains(kickQueue, beatNumber)){
       if(_.contains(snareQueue, beatNumber)){
         if(_.contains(hatQueue, beatNumber)){
@@ -273,9 +476,9 @@
     }else if(_.contains(tom1Queue, beatNumber)){
       playNote(currentKit.tom1Buffer);
     }
-    
-  }
 
+  }
+*/
   function playNote(buffer){
     var gainNode = context.createGain();
     gainNode.gain.value = gainVolume;
@@ -295,5 +498,224 @@
     }
   }
 
+  //////// CANVAS and ANIMATION FRAME ////////
+  var canvas = document.getElementById('animation');
+  var canvas2 = document.getElementById('animation2');
+  var canvasContext;
+  var canvas2Context;
+  //var anim;
+  //var wrapper = $('#sequenceWrapper').width();
+  var last16thNoteDrawn = -1;
+  var notesInQueue = [];
+
+  function initCanvas(){
+    //canvas = document.createElement( 'canvas' );
+    canvasContext = canvas.getContext( '2d' );
+    canvas2Context = canvas2.getContext( '2d' );
+    canvas.width = 967;
+    canvas.height = 20;
+    canvas2.width = 967;
+    canvas2.height = 20;
+    //anim = document.getElementById('animation');
+    //anim.appendChild(canvas);
+    //canvasContext.strokeStyle = '#ff0000';
+    //canvasContext.lineWidth = 2;
+    //var x = Math.floor(canvas.width / 18);
+    canvasContext.clearRect(0,0,canvas.width, canvas.height);
+    canvas2Context.clearRect(0,0,canvas.width, canvas.height);
+    for (var i=0; i<16; i++){
+      if(i === 0){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(69, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(69, 0, 30, 15);
+      }else if (i === 1){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(121, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(121, 0, 30, 15);
+      }else if (i === 2){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(173, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(173, 0, 30, 15);
+      }else if (i === 3){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(225, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(225, 0, 30, 15);
+      }else if (i === 4){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(302, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(302, 0, 30, 15);
+      }else if (i === 5){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(354, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(354, 0, 30, 15);
+      }else if (i === 6){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(406, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(406, 0, 30, 15);
+      }else if (i === 7){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(458, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(458, 0, 30, 15);
+      }else if (i === 8){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(535, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(535, 0, 30, 15);
+      }else if (i === 9){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(587, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(587, 0, 30, 15);
+      }else if (i === 10){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(639, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(639, 0, 30, 15);
+      }else if (i === 11){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(691, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(691, 0, 30, 15);
+      }else if (i === 12){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(768, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(768, 0, 30, 15);
+      }else if (i === 13){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(820, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(820, 0, 30, 15);
+      }else if (i === 14){
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(872, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(872, 0, 30, 15);
+      }else{
+        canvasContext.fillStyle = 'navy';
+        canvasContext.fillRect(924, 0, 30, 15);
+        canvas2Context.fillStyle = 'navy';
+        canvas2Context.fillRect(924, 0, 30, 15);
+      }
+    }
+  }
+
+  function draw() {
+    var currentNote = last16thNoteDrawn;
+    var currentTime = context.currentTime;
+    while (notesInQueue.length && notesInQueue[0].time < currentTime) {
+      currentNote = notesInQueue[0].note;
+      notesInQueue.splice(0,1);
+    }
+    if (last16thNoteDrawn !== currentNote) {
+      //var x = Math.floor(canvas.width / 18);
+      canvasContext.clearRect(0,0,canvas.width, canvas.height);
+      canvas2Context.clearRect(0,0,canvas.width, canvas.height);
+      for (var i=0; i<16; i++){
+        if(i === 0){
+          canvasContext.fillStyle = (currentNote === i+15) ? 'yellow' : 'navy';
+          canvasContext.fillRect(69, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i+15) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(69, 0, 30, 15);
+        }else if (i === 1){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(121, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(121, 0, 30, 15);
+        }else if (i === 2){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(173, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(173, 0, 30, 15);
+        }else if (i === 3){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(225, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(225, 0, 30, 15);
+        }else if (i === 4){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(302, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(302, 0, 30, 15);
+        }else if (i === 5){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(354, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(354, 0, 30, 15);
+        }else if (i === 6){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(406, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(406, 0, 30, 15);
+        }else if (i === 7){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(458, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(458, 0, 30, 15);
+        }else if (i === 8){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(535, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(535, 0, 30, 15);
+        }else if (i === 9){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(587, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(587, 0, 30, 15);
+        }else if (i === 10){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(639, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(639, 0, 30, 15);
+        }else if (i === 11){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(691, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(691, 0, 30, 15);
+        }else if (i === 12){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(768, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(768, 0, 30, 15);
+        }else if (i === 13){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(820, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(820, 0, 30, 15);
+        }else if (i === 14){
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(872, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(872, 0, 30, 15);
+        }else{
+          canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvasContext.fillRect(924, 0, 30, 15);
+          canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
+          canvas2Context.fillRect(924, 0, 30, 15);
+        }
+        //canvasContext.fillStyle = (currentNote === i) ? 'yellow' : 'navy';
+        //canvasContext.fillRect( x * (i+1), x, x/2, x/2 );
+      }
+      last16thNoteDrawn = currentNote;
+    }
+    requestAnimationFrame(draw);
+  }
+
+  function resetCanvas(e){
+    canvas.width = window.innerWidth;
+    canvas.height = 100;
+    //wrapper.width = window.innerWidth;
+    $('#sequenceWrapper').width($(window).width());
+    //wrapper.height = window.innerHeight;
+    window.scrollTo(0,0);
+  }
 
 })();
