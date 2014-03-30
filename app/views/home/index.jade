@@ -156,7 +156,7 @@ block content
           div
             h3 Synths:
             select#synth
-              option(value='Plasticid-MkII') Plasticid MkII
+              option(value='MiniSquare') MiniSquare
               option(value='T09') TR09
               option(value='TR606') TR606
         .small-4.columns
@@ -180,7 +180,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.a(a-sequence-position = i)
 
-      ul(class='inline-list', id='snareRow', style='width: 105%;')
+      ul(class='inline-list', id='bRow', style='width: 105%;')
         li.drum#b B
         -for(var i = 0; i < 4; i++)
           li.seqStep.b(b-sequence-position = i)
@@ -249,3 +249,17 @@ block content
         li.divider
         -for(var i = 12; i < 16; i++)
           li.seqStep.f(f-sequence-position = i)
+            
+      ul(class='inline-list', id='gRow', style='width: 105%;')
+        li.drum#g G
+        -for(var i = 0; i < 4; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 4; i < 8; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 8; i < 12; i++)
+          li.seqStep.g(g-sequence-position = i)
+        li.divider
+        -for(var i = 12; i < 16; i++)
+          li.seqStep.g(g-sequence-position = i)

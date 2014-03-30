@@ -10,7 +10,7 @@
     $(document).foundation();
     createAudioContext();
     initDrums();
-    //initSynths();
+    initSynths();
     initDrums();
     initCanvas();
     requestAnimationFrame(draw);
@@ -27,8 +27,7 @@
     $('.hat').click(clickHat);
     $('.tom').click(clickTom);
     $('.ohat').click(clickOhat);
-    //$('select#synth').change(changeSynth);
-    $('.seqStep').click(clickSeqStep);
+    $('select#synth').change(changeSynth);
 
     $('select#kit').change(changeKit);
     $('#volume').change(changeVolume);
@@ -38,7 +37,7 @@
     $('#hat').click(playHat);
     $('#tom').click(playTom);
     $('#ohat').click(playOhat);
-/*
+    
     $('.a').click(clickA);
     $('.b').click(clickB);
     $('.c').click(clickC);
@@ -52,7 +51,7 @@
     $('#c').click(playC);
     $('#d').click(playD);
     $('#e').click(playE);
-*/
+    $('.seqStep').click(clickSeqStep);
 
 //////Pads CSS////////////////
     $('body').keydown(function(event){
@@ -130,7 +129,7 @@
   function playOhat(){
     playNote(currentKit.ohatBuffer);
   }
-/*
+
 //////// SYNTH PADS ////////
   function playA(){
     playNote(currentSynth.aBuffer);
@@ -159,7 +158,6 @@
   function playG(){
     playNote(currentSynth.gBuffer);
   }
-*/
 //////// KITS ////////
   var kits = [];
   var kNumInstruments = 12; // called in drawDrumGrid(), drawPlayhead()
@@ -188,14 +186,14 @@
     }
     changeKit();
   }
-/*
+
 //////// Initialize Synths ////////
   var synths = [];
   var sNumInstruments = 3;
   var synthNames = [
-    'Plasticid-MkII',
-    'T09',
-    'TR606',
+    'MiniSquare',
+    //'T09',
+    //'TR606',
   ];
 
   function initSynths(){
@@ -205,11 +203,10 @@
     }
     changeSynth();
   }
-*/
 
 //////// CONTROLS ////////
   var currentKit;
-  //var currentSynth;
+  var currentSynth;
   var tempo = 120.0;
   var gainVolume = 1.0;
 
@@ -238,10 +235,10 @@
       currentKit = kits[5];
     }
     if(currentKit === 'sonor-mini-mammut'){
-      currentKit === kits[6];
+      currentKit = kits[6];
     }
     if(currentKit === 'jomox-xbase-09'){
-      currentKit === kits[7];
+      currentKit = kits[7];
     }
     if(currentKit === 'akai-xe-8'){
       currentKit = kits[8];
@@ -256,20 +253,19 @@
       currentKit = kits[11];
     }
   }
-/*
+  
   function changeSynth(){
     currentSynth = $('select#synth').val();
-    if(currentSynth === 'Plasticid-MkII'){
+    if(currentSynth === 'MiniSquare'){
       currentSynth = synths[0];
     }
-    if(currentSynth === 'T09'){
+    /*if(currentSynth === 'T09'){
       currentSynth = synths[1];
     }
     if(currentSynth === 'TR606'){
       currentSynth = synths[2];
-    }
+    }*/
   }
-*/
 
   function toggleStop(){
     if ($('#play').text() === 'STOP') {
@@ -301,6 +297,7 @@
   function clickKick(){
     if(!$(this).hasClass('selected')){
       kickQueue.push(parseInt($(this).attr('kick-sequence-position')));
+      console.log(kickQueue);
     }else{
       kickQueue = _.without(kickQueue, parseInt($(this).attr('kick-sequence-position')));
     }
@@ -339,7 +336,6 @@
   }
 
 
-/*
 //////// SYNTH SEQUENCER ////////
   var aQueue=[];
   var bQueue=[];
@@ -352,6 +348,7 @@
   function clickA(){
     if(!$(this).hasClass('selected')){
       aQueue.push(parseInt($(this).attr('a-sequence-position')));
+      console.log(aQueue);
     }else{
       aQueue = _.without(aQueue, parseInt($(this).attr('a-sequence-position')));
     }
@@ -404,7 +401,6 @@
       gQueue = _.without(gQueue, parseInt($(this).attr('g-sequence-position')));
     }
   }
-*/
 /////////Web Audio Drums///////////////
   var context;
 
@@ -427,6 +423,10 @@
 
 
   function play(){
+    console.log(aQueue);
+    console.log(bQueue);
+    console.log(cQueue);
+    console.log(dQueue);
     isPlaying = !isPlaying;
 
     if(isPlaying){
@@ -465,7 +465,7 @@
     if(_.contains(ohatQueue, beatNumber)){
       playNote(currentKit.ohatBuffer);
     }
-    /*if(_.contains(aQueue, beatNumber)){
+    if(_.contains(aQueue, beatNumber)){
       playNote(currentSynth.aBuffer);
     }
     if(_.contains(bQueue, beatNumber)){
@@ -485,7 +485,7 @@
     }
     if(_.contains(gQueue, beatNumber)){
       playNote(currentSynth.gBuffer);
-    }*/
+    }
   }
 /*
   function scheduleNote(beatNumber, time){
