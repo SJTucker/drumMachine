@@ -46,6 +46,13 @@ exports.saveBeat = function(req, res){
                   req.body.hatQueue?req.body.hatQueue:'',
                   req.body.tomQueue?req.body.tomQueue:'',
                   req.body.ohatQueue?req.body.ohatQueue:'',
+                  req.body.aQueue?req.body.aQueue:'',
+                  req.body.bQueue?req.body.bQueue:'',
+                  req.body.cQueue?req.body.cQueue:'',
+                  req.body.dQueue?req.body.dQueue:'',
+                  req.body.eQueue?req.body.eQueue:'',
+                  req.body.fQueue?req.body.fQueue:'',
+                  req.body.gQueue?req.body.gQueue:'',
                   function(){
       res.redirect('/');
     });

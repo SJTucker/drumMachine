@@ -57,7 +57,20 @@ User.findByEmailAndPassword = function(email, password, fn){
   });
 };
 
-User.prototype.saveBeat = function(name, oldkickQueue, oldsnareQueue, oldhatQueue, oldtomQueue, oldohatQueue, fn){
+User.prototype.saveBeat = function(name,
+                                   oldkickQueue,
+                                   oldsnareQueue,
+                                   oldhatQueue,
+                                   oldtomQueue,
+                                   oldohatQueue,
+                                   aQueue,
+                                   bQueu,
+                                   cQueue,
+                                   dQueue,
+                                   eQueue,
+                                   fQueue,
+                                   gQueue,
+                                   fn){
   var kickQueue = _.map(oldkickQueue, function(x){
     return parseInt(x);
   });
@@ -73,8 +86,41 @@ User.prototype.saveBeat = function(name, oldkickQueue, oldsnareQueue, oldhatQueu
   var ohatQueue = _.map(oldohatQueue, function(x){
     return parseInt(x);
   });
+  var aQueue = _.map(aQueue, function(x){
+    return parseInt(x);
+  });
+  var bQueue = _.map(bQueue, function(x){
+    return parseInt(x);
+  });
+  var cQueue = _.map(cQueue, function(x){
+    return parseInt(x);
+  });
+  var dQueue = _.map(dQueue, function(x){
+    return parseInt(x);
+  });
+  var eQueue = _.map(eQueue, function(x){
+    return parseInt(x);
+  });
+  var fQueue = _.map(fQueue, function(x){
+    return parseInt(x);
+  });
+    var gQueue = _.map(gQueue, function(x){
+    return parseInt(x);
+  });
 
-  var beat = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue};
+  var beat = {name:name,
+              kickQueue:kickQueue,
+              snareQueue:snareQueue,
+              hatQueue:hatQueue,
+              tomQueue:tomQueue,
+              ohatQueue:ohatQueue,
+              aQueue:aQueue,
+              bQueue:bQueue,
+              cQueue:cQueue,
+              dQueue:dQueue,
+              eQueue:eQueue,
+              fQueue:fQueue,
+              gQueue:gQueue};
   this.beats.push(beat);
   update(this, function(err){
     fn(err);

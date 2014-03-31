@@ -21,6 +21,7 @@
     $('#play').click(play);
     $('#play').text('PLAY');
     $('#setTempo').click(setTempo);
+    $('#clear').click(clear);
 
     $('.kick').click(clickKick);
     $('.snare').click(clickSnare);
@@ -30,7 +31,9 @@
     $('select#synth').change(changeSynth);
 
     $('select#kit').change(changeKit);
-    $('#volume').change(changeVolume);
+    $('#kitVolume').change(changeKitVolume);
+    $('#synthVolume').change(changeSynthVolume);
+
 
     $('#kick').click(playKick);
     $('#snare').click(playSnare);
@@ -208,7 +211,8 @@
   var currentKit;
   var currentSynth;
   var tempo = 120.0;
-  var gainVolume = 1.0;
+  var gainKitVolume = 1.0;
+  var gainSynthVolume = 1.0;
 
   function setTempo(){
     tempo = $('#tempo').val();
@@ -275,9 +279,15 @@
     }
   }
 
-  function changeVolume(){
-    var volume = $('#volume').attr('data-slider');
-    gainVolume = volume/50;
+  function changeKitVolume(){
+    var volume = $('#kitVolume').attr('data-slider');
+    gainKitVolume = volume/50;
+    console.log($('#kitVolume').attr('data-slider'));
+  }
+  
+  function changeSynthVolume(){
+    var volume = $('#synthVolume').attr('data-slider');
+    gainSynthVolume = volume/50;
   }
   
   function clickSeqStep(){
@@ -297,7 +307,6 @@
   function clickKick(){
     if(!$(this).hasClass('selected')){
       kickQueue.push(parseInt($(this).attr('kick-sequence-position')));
-      console.log(kickQueue);
     }else{
       kickQueue = _.without(kickQueue, parseInt($(this).attr('kick-sequence-position')));
     }
@@ -348,7 +357,6 @@
   function clickA(){
     if(!$(this).hasClass('selected')){
       aQueue.push(parseInt($(this).attr('a-sequence-position')));
-      console.log(aQueue);
     }else{
       aQueue = _.without(aQueue, parseInt($(this).attr('a-sequence-position')));
     }
@@ -423,10 +431,6 @@
 
 
   function play(){
-    console.log(aQueue);
-    console.log(bQueue);
-    console.log(cQueue);
-    console.log(dQueue);
     isPlaying = !isPlaying;
 
     if(isPlaying){
@@ -546,44 +550,99 @@
       var red = Math.floor(Math.random() * 256);
       var grn = Math.floor(Math.random() * 256);
       var blu = Math.floor(Math.random() * 256);
-      var alp = Math.random();
-      $('#kick').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+      $('#kick').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
     }
     else if(buffer === currentKit.snareBuffer){
       var red = Math.floor(Math.random() * 256);
       var grn = Math.floor(Math.random() * 256);
       var blu = Math.floor(Math.random() * 256);
       var alp = Math.random();
-      $('#snare').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+      $('#snare').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
     }
     else if(buffer === currentKit.hatBuffer){
       var red = Math.floor(Math.random() * 256);
       var grn = Math.floor(Math.random() * 256);
       var blu = Math.floor(Math.random() * 256);
       var alp = Math.random();
-      $('#hat').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+      $('#hat').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
     }
     else if(buffer === currentKit.tomBuffer){
       var red = Math.floor(Math.random() * 256);
       var grn = Math.floor(Math.random() * 256);
       var blu = Math.floor(Math.random() * 256);
       var alp = Math.random();
-      $('#tom').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+      $('#tom').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
     }
     else if(buffer === currentKit.ohatBuffer){
       var red = Math.floor(Math.random() * 256);
       var grn = Math.floor(Math.random() * 256);
       var blu = Math.floor(Math.random() * 256);
       var alp = Math.random();
-      $('#ohat').css('background-color', 'rgba('+red+', '+grn+', '+blu+', '+alp+')');
+      $('#ohat').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.aBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#a').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.bBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#b').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.cBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#c').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.dBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#d').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.eBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#e').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.fBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#f').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
+    }
+    else if(buffer === currentSynth.gBuffer){
+      var red = Math.floor(Math.random() * 256);
+      var grn = Math.floor(Math.random() * 256);
+      var blu = Math.floor(Math.random() * 256);
+      var alp = Math.random();
+      $('#g').css('background-color', 'rgb('+red+', '+grn+', '+blu+')');
     }
   }
 
 
   function playNote(buffer){
     randomColor(buffer);
-    var gainNode = context.createGain();
-    gainNode.gain.value = gainVolume;
+
+    if(buffer === currentKit.kickBuffer || buffer === currentKit.snareBuffer || buffer === currentKit.hatBuffer || buffer === currentKit.tomBuffer || buffer == currentKit.ohatBuffer){
+      var gainNode = context.createGain();
+      gainNode.gain.value = gainKitVolume;
+    }else{
+      var gainNode = context.createGain();
+      gainNode.gain.value = gainSynthVolume;
+    }
+
     source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(gainNode);
@@ -600,13 +659,42 @@
     }
   }
 
+  function clear(){
+    $('.seqStep').removeClass('selected');
+    kickQueue = [];
+    snareQueue = [];
+    hatQueue = [];
+    tomQueue = [];
+    ohatQueue= [];
+    aQueue= [];
+    bQueue= [];
+    cQueue= [];
+    dQueue= [];
+    eQueue= [];
+    fQueue= [];
+    gQueue= [];
+    
+  }
+
 /////////////User///////////////
   var beats = [];
   var name;
   function saveBeat(){
     var url = window.location.origin;
     name = $('#name').val();
-    var data = {name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue};
+    var data = {name:name,
+                kickQueue:kickQueue,
+                snareQueue:snareQueue,
+                hatQueue:hatQueue,
+                tomQueue:tomQueue,
+                ohatQueue:ohatQueue,
+                aQueue:aQueue,
+                bQueue:bQueue,
+                cQueue:cQueue,
+                dQueue:dQueue,
+                eQueue:eQueue,
+                fQueue:fQueue,
+                gQueue:gQueue};
     var type = 'POST';
     var success = updateBeats;
 
@@ -617,7 +705,19 @@
 
   function updateBeats(){
     var $option;
-    beats.push({name:name, kickQueue:kickQueue, snareQueue:snareQueue, hatQueue:hatQueue, tomQueue:tomQueue, ohatQueue:ohatQueue});
+    beats.push({name:name,
+                kickQueue:kickQueue,
+                snareQueue:snareQueue,
+                hatQueue:hatQueue,
+                tomQueue:tomQueue,
+                ohatQueue:ohatQueue,
+                aQueue:aQueue,
+                bQueue:bQueue,
+                cQueue:cQueue,
+                dQueue:dQueue,
+                eQueue:eQueue,
+                fQueue:fQueue,
+                gQueue:gQueue});
     console.log(beats[beats.length-1].name);
     
     $option = $('<option value="'+beats[beats.length-1].name+'">'+beats[beats.length-1].name+'</option>');
@@ -631,6 +731,13 @@
     hatQueue = [];
     tomQueue = [];
     ohatQueue= [];
+    aQueue= [];
+    bQueue= [];
+    cQueue= [];
+    dQueue= [];
+    eQueue= [];
+    fQueue= [];
+    gQueue= [];
 
     console.log(kickQueue);
     $('.seqStep').removeClass('selected');
@@ -646,6 +753,14 @@
     hatQueue = data.beat.hatQueue;
     tomQueue = data.beat.tomQueue;
     ohatQueue = data.beat.ohatQueue;
+    
+    aQueue = data.beat.aQueue;
+    bQueue = data.beat.bQueue;
+    cQueue = data.beat.cQueue;
+    dQueue = data.beat.dQueue;
+    eQueue = data.beat.eQueue;
+    fQueue = data.beat.fQueue;
+    gQueue = data.beat.gQueue;
 
     console.log(kickQueue);
 
@@ -654,9 +769,40 @@
 //////////NEEEEEEEDS WORK////////////
     for(var i = 0; i < 16; i++){
       if(_.contains(kickQueue, i)){
-        console.log('hi');
         $('ul.kickUL li:eq('+(i+1)+')').addClass('selected');
-        
+      }
+      if(_.contains(snareQueue, i)){
+        $('ul.snare li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(hatQueue, i)){
+        $('ul.hatUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(tomQueue, i)){
+        $('ul.tomUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(ohatQueue, i)){
+        $('ul.ohatUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(aQueue, i)){
+        $('ul.aUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(bQueue, i)){
+        $('ul.bUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(cQueue, i)){
+        $('ul.cUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(dQueue, i)){
+        $('ul.dUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(eQueue, i)){
+        $('ul.eUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(fQueue, i)){
+        $('ul.fUL li:eq('+(i+1)+')').addClass('selected');
+      }
+      if(_.contains(gQueue, i)){
+        $('ul.gUL li:eq('+(i+1)+')').addClass('selected');
       }
     }
   }

@@ -63,12 +63,17 @@ block content
             button.control.left.tiny.radius#play
 
         .small-4.columns.
-          <h3>Volume:</h3>
-            <div id="volume" class="range-slider radius" data-slider>
-              <span class="range-slider-handle"></span>
-              <span class="range-slider-active-segment"></span>
-              <input type="hidden">
-            </div>
+          <div class='row'>
+            <h3>Volume:</h3>
+              <div id="kitVolume" class="range-slider radius" data-slider>
+                <span class="range-slider-handle"></span>
+                <span class="range-slider-active-segment"></span>
+                <input type="hidden">
+              </div>
+          </div>
+          <div class='row text-center'>
+            <button id='clear' class='control tiny radius'>Clear</button>
+          </div>
 
         .small-4.columns.text-center
           label
@@ -159,14 +164,20 @@ block content
               option(value='MiniSquare') MiniSquare
               option(value='T09') TR09
               option(value='TR606') TR606
-        .small-4.columns
+        .small-4.columns.
+          <h3>Volume:</h3>
+            <div id="synthVolume" class="range-slider radius" data-slider>
+              <span class="range-slider-handle"></span>
+              <span class="range-slider-active-segment"></span>
+              <input type="hidden">
+            </div>
 
         .small-4-columns
 
   .row(id='synthWrapper', style='width: 100%;')
     .small-12.columns
       canvas(class='container', id='animation2')
-      ul(class='inline-list', id='aRow', style='width: 105%;')
+      ul(class='inline-list aUL', style='width: 105%;')
         li.drum#a A
         -for(var i = 0; i < 4; i++)
           li.seqStep.a(a-sequence-position = i)
@@ -180,7 +191,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.a(a-sequence-position = i)
 
-      ul(class='inline-list', id='bRow', style='width: 105%;')
+      ul(class='inline-list bUL', style='width: 105%;')
         li.drum#b B
         -for(var i = 0; i < 4; i++)
           li.seqStep.b(b-sequence-position = i)
@@ -194,7 +205,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.b(b-sequence-position = i)
 
-      ul(class='inline-list', id='cRow', style='width: 105%;')
+      ul(class='inline-list cUL', style='width: 105%;')
         li.drum#c C
         -for(var i = 0; i < 4; i++)
           li.seqStep.c(c-sequence-position = i)
@@ -208,7 +219,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.c(c-sequence-position = i)
 
-      ul(class='inline-list', id='dRow', style='width: 105%;')
+      ul(class='inline-list dUL', style='width: 105%;')
         li.drum#d D
         -for(var i = 0; i < 4; i++)
           li.seqStep.d(d-sequence-position = i)
@@ -222,7 +233,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.d(d-sequence-position = i)
 
-      ul(class='inline-list', id='eRow', style='width: 105%;')
+      ul(class='inline-list eUL', style='width: 105%;')
         li.drum#e E
         -for(var i = 0; i < 4; i++)
           li.seqStep.e(e-sequence-position = i)
@@ -236,7 +247,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.e(e-sequence-position = i)
 
-      ul(class='inline-list', id='fRow', style='width: 105%;')
+      ul(class='inline-list', id='fUL', style='width: 105%;')
         li.drum#f F
         -for(var i = 0; i < 4; i++)
           li.seqStep.f(f-sequence-position = i)
@@ -250,7 +261,7 @@ block content
         -for(var i = 12; i < 16; i++)
           li.seqStep.f(f-sequence-position = i)
             
-      ul(class='inline-list', id='gRow', style='width: 105%;')
+      ul(class='inline-list gUL', style='width: 105%;')
         li.drum#g G
         -for(var i = 0; i < 4; i++)
           li.seqStep.g(g-sequence-position = i)
