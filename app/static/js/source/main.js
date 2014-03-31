@@ -301,7 +301,7 @@
       currentKit = kits[5];
     }
     if(currentKit === 'akai-xe-8'){
-     currentKit = kits[6];
+      currentKit = kits[6];
     }
     if(currentKit === 'nord-rack-2'){
       currentKit = kits[7];

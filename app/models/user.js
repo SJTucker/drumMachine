@@ -104,7 +104,7 @@ User.prototype.saveBeat = function(name,
   var fQueue = _.map(fQueue, function(x){
     return parseInt(x);
   });
-    var gQueue = _.map(gQueue, function(x){
+  var gQueue = _.map(gQueue, function(x){
     return parseInt(x);
   });
 
