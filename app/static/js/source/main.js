@@ -513,7 +513,7 @@
     canvasContext = canvas.getContext( '2d' );
     canvas2Context = canvas2.getContext( '2d' );
     canvas.width = 967;
-    canvas.height = 20;
+    canvas.height = 22;
     canvas2.width = 967;
     canvas2.height = 20;
     //anim = document.getElementById('animation');
@@ -526,84 +526,148 @@
     for (var i=0; i<16; i++){
       if(i === 0){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(69, 0, 30, 15);
+        canvasContext.fillRect(69, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(69, 0, 30, 15);
+        canvas2Context.fillRect(69, 1, 30, 15);
+        canvasContext.strokeStyle='black';
+        canvasContext.strokeRect(68, 0, 32, 17);
+        canvas2Context.strokeStyle='black';
+        canvas2Context.strokeRect(68, 0, 32, 17);
       }else if (i === 1){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(121, 0, 30, 15);
+        canvasContext.fillRect(121, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(121, 0, 30, 15);
+        canvas2Context.fillRect(121, 1, 30, 15);
+        canvasContext.strokeStyle='black';
+        canvasContext.strokeRect(120, 0, 32, 17);
+        canvas2Context.strokeStyle='black';
+        canvas2Context.strokeRect(120, 0, 32, 17);
       }else if (i === 2){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(173, 0, 30, 15);
+        canvasContext.fillRect(173, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(173, 0, 30, 15);
+        canvas2Context.fillRect(173, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(172, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(172, 0, 32, 17);
       }else if (i === 3){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(225, 0, 30, 15);
+        canvasContext.fillRect(225, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(225, 0, 30, 15);
+        canvas2Context.fillRect(225, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(224, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(224, 0, 32, 17);
       }else if (i === 4){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(302, 0, 30, 15);
+        canvasContext.fillRect(302, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(302, 0, 30, 15);
+        canvas2Context.fillRect(302, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(301, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(301, 0, 32, 17);
       }else if (i === 5){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(354, 0, 30, 15);
+        canvasContext.fillRect(354, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(354, 0, 30, 15);
+        canvas2Context.fillRect(354, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(353, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(353, 0, 32, 17);
       }else if (i === 6){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(406, 0, 30, 15);
+        canvasContext.fillRect(406, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(406, 0, 30, 15);
+        canvas2Context.fillRect(406, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(405, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(405, 0, 32, 17);
       }else if (i === 7){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(458, 0, 30, 15);
+        canvasContext.fillRect(458, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(458, 0, 30, 15);
+        canvas2Context.fillRect(458, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(457, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(457, 0, 32, 17);
       }else if (i === 8){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(535, 0, 30, 15);
+        canvasContext.fillRect(535, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(535, 0, 30, 15);
+        canvas2Context.fillRect(535, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(534, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(534, 0, 32, 17);
       }else if (i === 9){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(587, 0, 30, 15);
+        canvasContext.fillRect(587, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(587, 0, 30, 15);
+        canvas2Context.fillRect(587, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(586, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(586, 0, 32, 17);
       }else if (i === 10){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(639, 0, 30, 15);
+        canvasContext.fillRect(639, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(639, 0, 30, 15);
+        canvas2Context.fillRect(639, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(638, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(638, 0, 32, 17);
       }else if (i === 11){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(691, 0, 30, 15);
+        canvasContext.fillRect(691, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(691, 0, 30, 15);
+        canvas2Context.fillRect(691, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(690, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(690, 0, 32, 17);
       }else if (i === 12){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(768, 0, 30, 15);
+        canvasContext.fillRect(768, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(768, 0, 30, 15);
+        canvas2Context.fillRect(768, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(767, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(767, 0, 32, 17);
       }else if (i === 13){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(820, 0, 30, 15);
+        canvasContext.fillRect(820, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(820, 0, 30, 15);
+        canvas2Context.fillRect(820, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(819, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(819, 0, 32, 17);
       }else if (i === 14){
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(872, 0, 30, 15);
+        canvasContext.fillRect(872, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(872, 0, 30, 15);
+        canvas2Context.fillRect(872, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(871, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(871, 0, 32, 17);
       }else{
         canvasContext.fillStyle = 'navy';
-        canvasContext.fillRect(924, 0, 30, 15);
+        canvasContext.fillRect(924, 1, 30, 15);
         canvas2Context.fillStyle = 'navy';
-        canvas2Context.fillRect(924, 0, 30, 15);
+        canvas2Context.fillRect(924, 1, 30, 15);
+        canvasContext.strokeStyle='#000000';
+        canvasContext.strokeRect(923, 0, 32, 17);
+        canvas2Context.strokeStyle='#000000';
+        canvas2Context.strokeRect(923, 0, 32, 17);
       }
     }
   }
@@ -622,84 +686,148 @@
       for (var i=0; i<16; i++){
         if(i === 0){
           canvasContext.fillStyle = (currentNote === i+15) ? 'yellow' : 'navy';
-          canvasContext.fillRect(69, 0, 30, 15);
+          canvasContext.fillRect(69, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i+15) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(69, 0, 30, 15);
+          canvas2Context.fillRect(69, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(68, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(68, 0, 32, 17);
         }else if (i === 1){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(121, 0, 30, 15);
+          canvasContext.fillRect(121, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(121, 0, 30, 15);
+          canvas2Context.fillRect(121, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(120, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(120, 0, 32, 17);
         }else if (i === 2){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(173, 0, 30, 15);
+          canvasContext.fillRect(173, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(173, 0, 30, 15);
+          canvas2Context.fillRect(173, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(172, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(172, 0, 32, 17);
         }else if (i === 3){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(225, 0, 30, 15);
+          canvasContext.fillRect(225, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(225, 0, 30, 15);
+          canvas2Context.fillRect(225, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(224, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(224, 0, 32, 17);
         }else if (i === 4){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(302, 0, 30, 15);
+          canvasContext.fillRect(302, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(302, 0, 30, 15);
+          canvas2Context.fillRect(302, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(301, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(301, 0, 32, 17);
         }else if (i === 5){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(354, 0, 30, 15);
+          canvasContext.fillRect(354, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(354, 0, 30, 15);
+          canvas2Context.fillRect(354, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(353, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(353, 0, 32, 17);
         }else if (i === 6){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(406, 0, 30, 15);
+          canvasContext.fillRect(406, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(406, 0, 30, 15);
+          canvas2Context.fillRect(406, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(405, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(405, 0, 32, 17);
         }else if (i === 7){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(458, 0, 30, 15);
+          canvasContext.fillRect(458, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(458, 0, 30, 15);
+          canvas2Context.fillRect(458, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(457, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(457, 0, 32, 17);
         }else if (i === 8){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(535, 0, 30, 15);
+          canvasContext.fillRect(535, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(535, 0, 30, 15);
+          canvas2Context.fillRect(535, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(534, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(534, 0, 32, 17);
         }else if (i === 9){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(587, 0, 30, 15);
+          canvasContext.fillRect(587, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(587, 0, 30, 15);
+          canvas2Context.fillRect(587, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(586, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(586, 0, 32, 17);
         }else if (i === 10){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(639, 0, 30, 15);
+          canvasContext.fillRect(639, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(639, 0, 30, 15);
+          canvas2Context.fillRect(639, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(638, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(638, 0, 32, 17);
         }else if (i === 11){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(691, 0, 30, 15);
+          canvasContext.fillRect(691, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(691, 0, 30, 15);
+          canvas2Context.fillRect(691, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(690, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(690, 0, 32, 17);
         }else if (i === 12){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(768, 0, 30, 15);
+          canvasContext.fillRect(768, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(768, 0, 30, 15);
+          canvas2Context.fillRect(768, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(767, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(767, 0, 32, 17);
         }else if (i === 13){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(820, 0, 30, 15);
+          canvasContext.fillRect(820, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(820, 0, 30, 15);
+          canvas2Context.fillRect(820, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(819, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(819, 0, 32, 17);
         }else if (i === 14){
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(872, 0, 30, 15);
+          canvasContext.fillRect(872, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(872, 0, 30, 15);
+          canvas2Context.fillRect(872, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(871, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(871, 0, 32, 17);
         }else{
           canvasContext.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvasContext.fillRect(924, 0, 30, 15);
+          canvasContext.fillRect(924, 1, 30, 15);
           canvas2Context.fillStyle = (currentNote === i-1) ? 'yellow' : 'navy';
-          canvas2Context.fillRect(924, 0, 30, 15);
+          canvas2Context.fillRect(924, 1, 30, 15);
+          canvasContext.strokeStyle='#000000';
+          canvasContext.strokeRect(923, 0, 32, 17);
+          canvas2Context.strokeStyle='#000000';
+          canvas2Context.strokeRect(923, 0, 32, 17);
         }
         //canvasContext.fillStyle = (currentNote === i) ? 'yellow' : 'navy';
         //canvasContext.fillRect( x * (i+1), x, x/2, x/2 );
