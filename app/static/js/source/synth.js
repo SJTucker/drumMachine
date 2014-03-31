@@ -3,7 +3,7 @@
 var synthCount = 0;
 var errorCount = 0;
 var successCount = 0;
-var synths = 3;
+var synths = 4;
 
 //------ Kit Constructor ------//
 function Synth(context, name, sNum) {

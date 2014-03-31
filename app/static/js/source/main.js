@@ -58,40 +58,40 @@
 
 //////Pads CSS////////////////
     $('body').keydown(function(event){
-      if(event.keyCode === 65 || event.keyCode === 90){
+      if(event.keyCode === 16 || event.keyCode === 90){
         playKick();
         $('#kick').css('background-color', 'white');
         $('#kick').css('color', 'black');
       }
     });
     $('body').keyup(function(event){
-      if(event.keyCode === 65 || event.keyCode === 90){
+      if(event.keyCode === 16 || event.keyCode === 90){
         $('#kick').css('background-color', 'black');
         $('#kick').css('color', 'white');
       }
     });
     $('body').keydown(function(e){
-      if(e.keyCode === 72){
+      if(e.keyCode === 18){
         playSnare();
         $('#snare').css('background-color', 'white');
         $('#snare').css('color', 'black');
       }
     });
     $('body').keyup(function(event){
-      if(event.keyCode === 72){
+      if(event.keyCode === 18){
         $('#snare').css('background-color', 'black');
         $('#snare').css('color', 'white');
       }
     });
     $('body').keydown(function(e){
-      if(e.keyCode === 76){
+      if(e.keyCode === 91){
         playHat();
         $('#hat').css('background-color', 'white');
         $('#hat').css('color', 'black');
       }
     });
     $('body').keyup(function(event){
-      if(event.keyCode === 76){
+      if(event.keyCode === 91){
         $('#hat').css('background-color', 'black');
         $('#hat').css('color', 'white');
       }
@@ -107,6 +107,71 @@
       if(event.keyCode === 82 || event.keyCode === 84){
         $('#tom').css('background-color', 'black');
         $('#tom').css('color', 'white');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 81){
+        playOhat();
+        $('#ohat').css('background-color', 'white');
+        $('#ohat').css('color', 'black');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 81){
+        $('#ohat').css('background-color', 'black');
+        $('#ohat').css('color', 'white');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 221){
+        playF();
+        $('#f').css('background-color', 'white');
+        $('#f').css('color', 'black');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 221){
+        $('#f').css('background-color', 'black');
+        $('#f').css('color', 'white');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 220){
+        playG();
+        $('#g').css('background-color', 'white');
+        $('#g').css('color', 'black');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 220){
+        $('#g').css('background-color', 'black');
+        $('#g').css('color', 'white');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 219){
+        playD();
+        $('#d').css('background-color', 'white');
+        $('#d').css('color', 'black');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 219){
+        $('#d').css('background-color', 'black');
+        $('#d').css('color', 'white');
+      }
+    });
+    $('body').keydown(function(e){
+      if(e.keyCode === 80){
+        playC();
+        $('#c').css('background-color', 'white');
+        $('#c').css('color', 'black');
+      }
+    });
+    $('body').keyup(function(event){
+      if(event.keyCode === 80){
+        $('#c').css('background-color', 'black');
+        $('#c').css('color', 'white');
       }
     });
     $('#save').click(saveBeat);
@@ -163,7 +228,7 @@
   }
 //////// KITS ////////
   var kits = [];
-  var kNumInstruments = 12; // called in drawDrumGrid(), drawPlayhead()
+  var kNumInstruments = 9; // called in drawDrumGrid(), drawPlayhead()
   var kitNames = [
     'Plasticid-MkII',
     'T09',
@@ -171,10 +236,7 @@
     'hiphop',
     'dr.groove',
     'ace',
-    'sonor-mini-mammut',
-    'Jomox-xbase-09',
     'akai-xe-8',
-    'multimoog',
     'nord-rack-2',
     'groovebox'
 
@@ -192,11 +254,12 @@
 
 //////// Initialize Synths ////////
   var synths = [];
-  var sNumInstruments = 3;
+  var sNumInstruments = 4;
   var synthNames = [
     'MiniSquare',
-    //'T09',
-    //'TR606',
+    'FattySaw',
+    'TriSaw',
+    'SweetChords'
   ];
 
   function initSynths(){
@@ -238,23 +301,14 @@
     if(currentKit === 'ace'){
       currentKit = kits[5];
     }
-    if(currentKit === 'sonor-mini-mammut'){
-      currentKit = kits[6];
-    }
-    if(currentKit === 'jomox-xbase-09'){
-      currentKit = kits[7];
-    }
     if(currentKit === 'akai-xe-8'){
-      currentKit = kits[8];
-    }
-    if(currentKit === 'multimoog'){
-      currentKit = kits[9];
+     currentKit = kits[6];
     }
     if(currentKit === 'nord-rack-2'){
-      currentKit = kits[10];
+      currentKit = kits[7];
     }
     if(currentKit === 'groovebox'){
-      currentKit = kits[11];
+      currentKit = kits[8];
     }
   }
   
@@ -263,12 +317,15 @@
     if(currentSynth === 'MiniSquare'){
       currentSynth = synths[0];
     }
-    /*if(currentSynth === 'T09'){
+    if(currentSynth === 'FattySaw'){
       currentSynth = synths[1];
     }
-    if(currentSynth === 'TR606'){
+    if(currentSynth === 'TriSaw'){
       currentSynth = synths[2];
-    }*/
+    }
+    if(currentSynth === 'SweetChords'){
+      currentSynth = synths[3];
+    }
   }
 
   function toggleStop(){

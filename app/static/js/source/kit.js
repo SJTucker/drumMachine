@@ -3,7 +3,7 @@
 var kitCount = 0;
 var errorCount = 0;
 var successCount = 0;
-var kits = 12;
+var kits = 9;
 
 //------ Kit Constructor ------//
 function Kit(context, name, kNum) {
