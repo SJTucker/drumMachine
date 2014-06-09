@@ -829,7 +829,7 @@
         $('ul.kickUL li:eq('+(i+1)+')').addClass('selected');
       }
       if(_.contains(snareQueue, i)){
-        $('ul.snare li:eq('+(i+1)+')').addClass('selected');
+        $('ul.snareUL li:eq('+(i+1)+')').addClass('selected');
       }
       if(_.contains(hatQueue, i)){
         $('ul.hatUL li:eq('+(i+1)+')').addClass('selected');
