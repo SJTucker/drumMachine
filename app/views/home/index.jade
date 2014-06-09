@@ -13,19 +13,17 @@ block content
         li: a.nav(href="/login") Login
  
   .panel.text-center
-    h1 seQuenZisTenZ
+    h1#panel seQuenZisTenZ
 
   if user
     .row
-      .small-3.columns
+      .small-6.columns
         form(method='post', action='/')
           label: h3 Name:
           input#name(type="text")
           button#save Save Beat
-  
-  if user
-    .row
-      .small-4.columns
+      .small-6-columns
+        label: h3 Load:
         select#beats
           each beat in user.beats
             option(value= beat.name)= beat.name
