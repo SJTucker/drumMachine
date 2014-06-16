@@ -20,6 +20,7 @@
     "mongodb":         "*",
     "bcrypt":          "*",
     "connect-redis":   "*",
+    "cookie-session":  "*",
     "redis":           "*",
     "jade":            "*",
     "express-less":    "*",

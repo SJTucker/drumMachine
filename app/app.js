@@ -18,6 +18,7 @@ var session    = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var initMongo  = require('./lib/init-mongo');
 var initRoutes = require('./lib/init-routes');
+var cookieSession = require('cookie-session');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -33,11 +34,12 @@ app.use('/less', less(__dirname + '/less'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
+app.use(cookieSession({keys:['SAM']}));
 /*app.use(express.session({
   store : new RedisStore({host: 'localhost', port: 6379}),
   secret: 'change-this-to-a-super-secret-message',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));*/
+}));
 
 app.configure("development", function(){
   app.use(express.session({ secret: "password",
@@ -50,15 +52,16 @@ app.configure("development", function(){
 app.configure("production", function(){
  var redisUrl = require("url").parse(process.env.REDISTOGO_URL);
  var redisAuth = redisUrl.auth.split(':');
- console.log("LOOK HERE" + redisUrl);
- console.log("LOOK HERE" + redisAuth);
 
+ console.log("redisauth" + redisUrl.auth);
+ console.log("redisauth[0]" + redisAuth[0]);
+ console.log("redisauth[1]" + redisAuth[1]);
 
  app.use(express.session({ secret: "password",
-                           store: new RedisStore({host: redisUrl.hostname, port: redisUrl.port, db: redisAuth[0], pass: redisAuth[1]}),
+                           store: new RedisStore({host: redisUrl.hostname, port: redisUrl.port}),
                            cookie: { maxAge: 24 * 60 * 60 * 1000 }
          }));
-});
+});*/
 
 
 app.use(app.router);
