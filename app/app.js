@@ -50,8 +50,8 @@ app.configure("development", function(){
 app.configure("production", function(){
  var redisUrl = url.parse(process.env.REDISTOGO_URL);
  var redisAuth = redisUrl.auth.split(':');
- console.log(redisUrl);
- console.log(redisAuth);
+ console.log("LOOK HERE" + redisUrl);
+ console.log("LOOK HERE" + redisAuth);
 
 
  app.use(express.session({ secret: "password",
