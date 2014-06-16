@@ -32,11 +32,11 @@ app.use('/less', less(__dirname + '/less'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({
+/*app.use(express.session({
   store : new RedisStore({host: 'localhost', port: 6379}),
   secret: 'change-this-to-a-super-secret-message',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));
+}));*/
 app.use(app.router);
 /* --- pipeline ends   */
 
