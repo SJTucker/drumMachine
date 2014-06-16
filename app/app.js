@@ -40,7 +40,7 @@ app.use(express.cookieParser());
 }));*/
 
 app.configure("development", function(){
-  app.use(express.session({ secret: "password", 
+  app.use(express.session({ secret: "password",
                             store: new RedisStore({ host: "127.0.0.1", port: "6379"}),
                             cookie: { maxAge: 24 * 60 * 60 * 1000 }
                           }));
@@ -50,16 +50,13 @@ app.configure("development", function(){
 app.configure("production", function(){
  var redisUrl = url.parse(process.env.REDISTOGO_URL);
  var redisAuth = redisUrl.auth.split(':');
+ console.log(redisUrl);
+ console.log(redisAuth);
 
 
  app.use(express.session({ secret: "password",
-                           store: new RedisStore({
-                                        host: redisUrl.hostname,
-                                        port: redisUrl.port,
-                                        db: redisAuth[0],
-                                        pass: redisAuth[1]
-                                      }),  
-                            cookie: { maxAge: 24 * 60 * 60 * 1000 }
+                           store: new RedisStore({host: redisUrl.hostname, port: redisUrl.port, db: redisAuth[0], pass: redisAuth[1]}),
+                           cookie: { maxAge: 24 * 60 * 60 * 1000 }
          }));
 });
 
