@@ -2,7 +2,8 @@
 
 module.exports = User;
 var bcrypt = require('bcrypt');
-var users = global.nss.db.collection('users');
+//var users = global.nss.db.collection('users');
+var users = db.collection('users');
 var _ = require('lodash');
 var Mongo = require('mongodb');
 
